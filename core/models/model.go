@@ -2,6 +2,8 @@ package models
 
 import (
 	//"fmt"
+	"os",
+	"errors"
 )
 
 type QueryHolder struct {
@@ -27,7 +29,7 @@ type QueryHolder struct {
 	grep string
 }
 
-func (queryHolder *QueryHolder) sanitise() {
+func (queryHolder *QueryHolder) sanitise() (bool, error) {
 	// TODO
 	// check if file path is proper
 	// check if alias is proper
@@ -37,4 +39,21 @@ func (queryHolder *QueryHolder) sanitise() {
 	// check if regex is valid
 	// check if negateRegex is valid
 	// sanitize grep command !! very important !!
+
+	// check if the file does not exists
+	if _, err := os.Stat(queryHolder.Path); os.IsNotExist(err) {
+		return false, errors.new("FILE_NOT_FOUND")
+	}
+
+	// check if readFrom is invalid
+	if !(queryHolder.readFrom == "head" || queryHolder.readFrom == "tail") {
+		return false, errors.new("INVALID_READ_POS")
+	}
+
+	if queryHolder.limit <= 0 {
+		return false, errors.new("INVALID_LIMIT")
+	}
+
+	return true, nil
+
 }
