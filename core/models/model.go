@@ -26,3 +26,15 @@ type QueryHolder struct {
 	// grep command options
 	grep string
 }
+
+func (queryHolder *QueryHolder) sanitise() {
+	// TODO
+	// check if file path is proper
+	// check if alias is proper
+	// either alias or path should be present but not both
+	// check if the value for readFrom is valid
+	// check if limit is valid
+	// check if regex is valid
+	// check if negateRegex is valid
+	// sanitize grep command !! very important !!
+}
