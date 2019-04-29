@@ -1,8 +1,7 @@
 package models
 
 import (
-	//"fmt"
-	"os",
+	"os"
 	"errors"
 )
 
@@ -11,25 +10,25 @@ type QueryHolder struct {
 	Path string
 
 	// alias name for a file. must be configured
-	alias string
+	Alias string
 
 	// can accept only two values : head or tail
-	readFrom string
+	ReadFrom string
 
 	// number of lines to be streamed
-	limit int32
+	Limit int32
 
 	// search for lines containing entities matching given regex
-	regex string
+	Regex string
 
 	// search for lines containing entities which does not match given regex
-	negateRegex string
+	NegateRegex string
 
 	// grep command options
-	grep string
+	Grep string
 }
 
-func (queryHolder *QueryHolder) sanitise() (bool, error) {
+func (queryHolder *QueryHolder) Sanitise() (bool, error) {
 	// TODO
 	// check if file path is proper
 	// check if alias is proper
@@ -40,20 +39,32 @@ func (queryHolder *QueryHolder) sanitise() (bool, error) {
 	// check if negateRegex is valid
 	// sanitize grep command !! very important !!
 
-	// check if the file does not exists
+	// check if the file does not exists or if the path is a directory
 	if _, err := os.Stat(queryHolder.Path); os.IsNotExist(err) {
-		return false, errors.new("FILE_NOT_FOUND")
+		
+	}
+
+	stat, err := os.Stat(queryHolder.Path)
+	if os.IsNotExist(err) {
+		return false, errors.New("FILE_NOT_FOUND")
+	}
+
+	if err != nil {
+		return false, err
+	}
+
+	if stat.IsDir() {
+		return false, errors.New("PATH_IS_A_DIRECTORY")
 	}
 
 	// check if readFrom is invalid
-	if !(queryHolder.readFrom == "head" || queryHolder.readFrom == "tail") {
-		return false, errors.new("INVALID_READ_POS")
+	if !(queryHolder.ReadFrom == "head" || queryHolder.ReadFrom == "tail") {
+		return false, errors.New("INVALID_READ_POS")
 	}
 
-	if queryHolder.limit <= 0 {
-		return false, errors.new("INVALID_LIMIT")
+	if queryHolder.Limit <= 0 {
+		return false, errors.New("INVALID_LIMIT")
 	}
 
 	return true, nil
-
 }
