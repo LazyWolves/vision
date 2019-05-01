@@ -16,7 +16,7 @@ type QueryHolder struct {
 	ReadFrom string
 
 	// number of lines to be streamed
-	Limit int32
+	Limit int64
 
 	// search for lines containing entities matching given regex
 	Regex string
@@ -30,11 +30,9 @@ type QueryHolder struct {
 
 func (queryHolder *QueryHolder) Sanitise() (bool, error) {
 	// TODO
-	// check if file path is proper
 	// check if alias is proper
 	// either alias or path should be present but not both
 	// check if the value for readFrom is valid
-	// check if limit is valid
 	// check if regex is valid
 	// check if negateRegex is valid
 	// sanitize grep command !! very important !!

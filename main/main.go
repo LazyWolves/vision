@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	test := &models.QueryHolder{"/var/log/apache2", "", "" ,0, "", "", ""}
+	test := &models.QueryHolder{"/var/log/apache2/access.log", "", "hea" ,1, "", "", ""}
 	isClean, err := test.Sanitise()
 	fmt.Println(err)
 	fmt.Println(isClean)
