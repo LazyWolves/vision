@@ -2,6 +2,7 @@ package main
 
 import (
 	"vision/core/models"
+	"vision/core/fileHandler"
 	"fmt"
 )
 
@@ -10,4 +11,6 @@ func main() {
 	isClean, err := test.Sanitise()
 	fmt.Println(err)
 	fmt.Println(isClean)
+	line, err := fileHandler.ReadFromHead("/home/deep/grep", 2)
+	fmt.Println(line)
 }

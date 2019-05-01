@@ -2,10 +2,11 @@ package fileHandler
 
 import (
 	"os"
-	"errors"
+	//"errors"
 	"bufio"
 	"io"
-	"fmt"
+	//"fmt"
+	"strings"
 )
 
 func ReadFromHead(path string, numLines int64) (string, error) {
@@ -13,21 +14,25 @@ func ReadFromHead(path string, numLines int64) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	defer fileHandle.close()
+	defer fileHandle.Close()
+
+	linesList := make([]string, 0, 1)
 
 	bufferedReader := bufio.NewReader(fileHandle)
 	var line string
 
-	for index := 0; index < numLines; index++ {
-		line, err = bufferedReader.readString("\n")
+	for index := int64(0); index < numLines; index++ {
+		line, err = bufferedReader.ReadString('\n')
 		if err == io.EOF {
 			break
 		}
 		if err != nil {
 			return "", err
 		}
-		fmt.Println(line)
+		linesList =  append(linesList, line)
 	}
 
-	return line, nil
+	topNlines := strings.Join(linesList[:], "")
+
+	return topNlines, nil
 }
