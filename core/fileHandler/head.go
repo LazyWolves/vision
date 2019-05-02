@@ -7,26 +7,8 @@ import (
 	"io"
 	//"fmt"
 	"strings"
-	"regexp"
+	"vision/core/util"
 )
-
-func checkPattern(line, posRegex, negRegex string) (bool) {
-	if posRegex != "" {
-		match, _ := regexp.MatchString(posRegex, line)
-		if !match {
-			return false
-		}
-	}
-
-	if negRegex != "" {
-		match, _ := regexp.MatchString(negRegex, line)
-		if match {
-			return false
-		}
-	}
-
-	return true
-}
 
 func ReadFromHead(path, posRegex, negRegex  string, numLines int64) (string, error) {
 	fileHandle, err := os.Open(path)
@@ -48,7 +30,7 @@ func ReadFromHead(path, posRegex, negRegex  string, numLines int64) (string, err
 		if err != nil {
 			return "", err
 		}
-		if checkPattern(line, posRegex, negRegex) {
+		if util.CheckPattern(line, posRegex, negRegex) {
 			linesList =  append(linesList, line)
 		}
 	}
