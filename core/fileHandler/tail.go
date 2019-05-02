@@ -5,19 +5,22 @@ import (
 	//"errors"
 	//"bufio"
 	"io"
-	"fmt"
 	"strings"
-	//"vision/core/util"
+	"vision/core/util"
 )
 
 func getfilteredLines(lines, posRegex, negRegex string) (string) {
 	lineList := strings.Split(lines, "\n")
-	for _, line := range lineList {
-		fmt.Print(line)
+	filteredLines := make([]string, 0, 1)
 
+	for _, line := range lineList {
+		if util.CheckPattern(line, posRegex, negRegex) {
+			filteredLines =  append(filteredLines, line)
+		}
 	}
-	fmt.Println(len(lineList))
-	return "test"
+
+	allLines := strings.Join(filteredLines, "\n")
+	return allLines
 }
 
 func ReadFromTail(path, posRegex, negRegex  string, numLines int64) (string, error) {
