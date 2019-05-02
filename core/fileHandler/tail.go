@@ -5,10 +5,20 @@ import (
 	//"errors"
 	//"bufio"
 	"io"
-	//"fmt"
-	//"strings"
+	"fmt"
+	"strings"
 	//"vision/core/util"
 )
+
+func getfilteredLines(lines, posRegex, negRegex string) (string) {
+	lineList := strings.Split(lines, "\n")
+	for _, line := range lineList {
+		fmt.Print(line)
+
+	}
+	fmt.Println(len(lineList))
+	return "test"
+}
 
 func ReadFromTail(path, posRegex, negRegex  string, numLines int64) (string, error) {
     fileHandle, err := os.Open(path)
@@ -57,7 +67,7 @@ func ReadFromTail(path, posRegex, negRegex  string, numLines int64) (string, err
     b := make([]byte, (endPos+1)-finalReadStartPos)
     _, err = fileHandle.ReadAt(b, finalReadStartPos+1)
     if err == io.EOF {
-        return string(b), nil
+        return getfilteredLines(string(b), posRegex, negRegex), nil
     } else if err != nil {
         return "", err
     }
