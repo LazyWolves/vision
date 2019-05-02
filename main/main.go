@@ -11,6 +11,6 @@ func main() {
 	isClean, err := test.Sanitise()
 	fmt.Println(err)
 	fmt.Println(isClean)
-	line, err := fileHandler.ReadFromHead("/home/deep/grep", "Display", "back", 100)
+	line, err := fileHandler.ReadFromTail("/home/deep/grep", "Display", "back", 2)
 	fmt.Println(line)
 }
