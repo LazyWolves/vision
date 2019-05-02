@@ -7,9 +7,28 @@ import (
 	"io"
 	//"fmt"
 	"strings"
+	"regexp"
 )
 
-func ReadFromHead(path string, numLines int64) (string, error) {
+func checkPattern(line, posRegex, negRegex string) (bool) {
+	if posRegex != "" {
+		match, _ := regexp.MatchString(posRegex, line)
+		if !match {
+			return false
+		}
+	}
+
+	if negRegex != "" {
+		match, _ := regexp.MatchString(negRegex, line)
+		if match {
+			return false
+		}
+	}
+
+	return true
+}
+
+func ReadFromHead(path, posRegex, negRegex  string, numLines int64) (string, error) {
 	fileHandle, err := os.Open(path)
 	if err != nil {
 		return "", err
@@ -29,7 +48,9 @@ func ReadFromHead(path string, numLines int64) (string, error) {
 		if err != nil {
 			return "", err
 		}
-		linesList =  append(linesList, line)
+		if checkPattern(line, posRegex, negRegex) {
+			linesList =  append(linesList, line)
+		}
 	}
 
 	topNlines := strings.Join(linesList[:], "")
