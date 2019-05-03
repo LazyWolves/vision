@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	request := &models.QueryHolder{"/home/deep/grep", "", "tail" ,2, "", "", ""}
+	request := &models.QueryHolder{"/home/deep/hhtt", "", "head" ,2, "", "", ""}
 	lines, err := fileDriver.FileDriver(request)
 	fmt.Println(err)
 	fmt.Println(lines)
