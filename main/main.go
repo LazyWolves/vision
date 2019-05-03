@@ -3,7 +3,9 @@ package main
 import (
 	"vision/core/models"
 	"vision/core/fileDriver"
+	"vision/core/models"
 	"fmt"
+	"vision/api"
 )
 
 func main() {
@@ -11,4 +13,6 @@ func main() {
 	lines, err := fileDriver.FileDriver(request)
 	fmt.Println(err)
 	fmt.Println(lines)
+
+	api.Api()
 }
