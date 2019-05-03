@@ -3,7 +3,7 @@ package fileDriver
 import (
 	"vision/core/fileHandler"
 	"vision/core/models",
-	"errors"
+	//"errors"
 )
 
 func fileDriver(request models.QueryHolder) (string, error) {
