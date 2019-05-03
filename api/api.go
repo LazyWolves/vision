@@ -3,8 +3,10 @@ package api
 import (
 	"net/http"
 	"fmt"
-	"vision/core/fileDriver"
-	"vision/core/models"
+	"strconv"
+	//"reflect"
+	//"vision/core/fileDriver"
+	//"vision/core/models"
 )
 
 func Api() {
@@ -19,13 +21,34 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	posRegexSlice, isPosRegex := r.URL.Query()["posRegexSlice"]
 	negRegexSlice, isNegRegex := r.URL.Query()["negRegexSlice"]
 
-	path, readFrom, limit, posRegex, negRegex := "", "head", 0, "", ""
+	path, readFrom, limit, posRegex, negRegex := "", "head", int64(0), "", ""
 
-	if !err {
-		return
+	if isPath {
+		path = pathSlice[0]
 	}
 
-	path := paths[0]
+	if isReadFrom {
+		readFrom = readFromSlice[0]
+	}
+
+	if isLimit {
+		limitTemp, err := strconv.ParseInt(limitSlice[0], 10, 64)
+		limit = limitTemp
+		fmt.Print(err)
+	}
+
+	if isPosRegex {
+		posRegex = posRegexSlice[0]
+	}
+
+	if isNegRegex {
+		negRegex = negRegexSlice[0]
+	}
+
 	fmt.Println(path)
+	fmt.Println(readFrom)
+	fmt.Println(limit)
+	fmt.Println(posRegex)
+	fmt.Println(negRegex)
 }
 
