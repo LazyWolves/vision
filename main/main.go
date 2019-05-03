@@ -2,15 +2,13 @@ package main
 
 import (
 	"vision/core/models"
-	"vision/core/fileHandler"
+	"vision/core/fileDriver"
 	"fmt"
 )
 
 func main() {
-	test := &models.QueryHolder{"/var/log/apache2/access.log", "", "hea" ,1, "", "", ""}
-	isClean, err := test.Sanitise()
+	request := &models.QueryHolder{"/home/deep/grep", "", "tail" ,2, "", "", ""}
+	lines, err := fileDriver.FileDriver(request)
 	fmt.Println(err)
-	fmt.Println(isClean)
-	line, err := fileHandler.ReadFromTail("/home/deep/grep", "", "", 2)
-	fmt.Println(line)
+	fmt.Println(lines)
 }

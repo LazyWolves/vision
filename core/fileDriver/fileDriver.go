@@ -2,19 +2,21 @@ package fileDriver
 
 import (
 	"vision/core/fileHandler"
-	"vision/core/models",
+	"vision/core/models"
+	"fmt"
 	//"errors"
 )
 
-func fileDriver(request models.QueryHolder) (string, error) {
+func FileDriver(request *models.QueryHolder) (string, error) {
 	isClean, err := request.Sanitise()
+	fmt.Println(isClean)
 	if err != nil {
 		return "", err
 	}
 
 	filePath := request.Path
 
-	if request.readFrom == "head" {
+	if request.ReadFrom == "head" {
 		return fileHandler.ReadFromHead(filePath, request.Regex, request.NegateRegex, request.Limit)
 	} else {
 		return fileHandler.ReadFromTail(filePath, request.Regex, request.NegateRegex, request.Limit)
