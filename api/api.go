@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"fmt"
 	"strconv"
-	//"reflect"
-	//"vision/core/fileDriver"
-	//"vision/core/models"
+	"reflect"
+	"vision/core/fileDriver"
+	"vision/core/models"
 )
 
 func Api() {
@@ -18,10 +18,10 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	pathSlice, isPath := r.URL.Query()["path"]
 	readFromSlice, isReadFrom := r.URL.Query()["readFrom"]
 	limitSlice, isLimit := r.URL.Query()["limit"]
-	posRegexSlice, isPosRegex := r.URL.Query()["posRegexSlice"]
-	negRegexSlice, isNegRegex := r.URL.Query()["negRegexSlice"]
+	posRegexSlice, isPosRegex := r.URL.Query()["filterBy"]
+	negRegexSlice, isNegRegex := r.URL.Query()["ignore"]
 
-	path, readFrom, limit, posRegex, negRegex := "", "head", int64(0), "", ""
+	path, readFrom, limit, posRegex, negRegex := "", "tail", int64(10), "", ""
 
 	if isPath {
 		path = pathSlice[0]
@@ -33,8 +33,11 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 
 	if isLimit {
 		limitTemp, err := strconv.ParseInt(limitSlice[0], 10, 64)
+		if err != nil {
+			fmt.Fprintf(w, err.Error())
+			return
+		}
 		limit = limitTemp
-		fmt.Print(err)
 	}
 
 	if isPosRegex {
@@ -45,10 +48,31 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 		negRegex = negRegexSlice[0]
 	}
 
-	fmt.Println(path)
-	fmt.Println(readFrom)
-	fmt.Println(limit)
-	fmt.Println(posRegex)
-	fmt.Println(negRegex)
+	request := &models.QueryHolder{
+		Path: path,
+		Alias: "",
+		ReadFrom: readFrom,
+		Limit: limit,
+		Regex: posRegex,
+		NegateRegex: negRegex,
+		Grep: "",
+	}
+
+	//fmt.Println(path)
+	//fmt.Println(readFrom)
+	//fmt.Println(limit)
+	//fmt.Println(posRegex)
+	//fmt.Println(negRegex)
+
+	response, err := fileDriver.FileDriver(request)
+	if err != nil {
+		fmt.Fprintf(w, err.Error())
+		return
+	}
+
+	fmt.Print(response)
+	fmt.Print(reflect.TypeOf(response))
+
+	fmt.Fprintf(w, response)
 }
 

@@ -31,7 +31,7 @@ func ReadFromHead(path, posRegex, negRegex  string, numLines int64) (string, err
 			return "", err
 		}
 		if util.CheckPattern(line, posRegex, negRegex) {
-			linesList =  append(linesList, line)
+			linesList = append(linesList, line)
 		}
 	}
 
