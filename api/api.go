@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"fmt"
 	"strconv"
-	"reflect"
+	//"reflect"
 	"vision/core/fileDriver"
 	"vision/core/models"
 )
@@ -15,6 +15,8 @@ func Api() {
 }
 
 func apiHandler(w http.ResponseWriter, r *http.Request) {
+	//w.Header().Set("Content-Type", "text/plain; charset=utf-8")
+
 	pathSlice, isPath := r.URL.Query()["path"]
 	readFromSlice, isReadFrom := r.URL.Query()["readFrom"]
 	limitSlice, isLimit := r.URL.Query()["limit"]
@@ -70,9 +72,5 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Print(response)
-	fmt.Print(reflect.TypeOf(response))
-
 	fmt.Fprintf(w, response)
 }
-

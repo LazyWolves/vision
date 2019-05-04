@@ -2,8 +2,6 @@ package fileHandler
 
 import (
 	"os"
-	//"errors"
-	//"bufio"
 	"io"
 	"strings"
 	"vision/core/util"
@@ -18,8 +16,13 @@ func getfilteredLines(lines, posRegex, negRegex string) (string) {
 			filteredLines =  append(filteredLines, line)
 		}
 	}
-
 	allLines := strings.Join(filteredLines, "\n")
+    if len(filteredLines) == 0 {
+        return ""
+    }
+    if allLines[len(allLines) - 1] == 0 {
+        allLines = string(allLines[0: len(allLines) - 1])
+    }
 	return allLines
 }
 
