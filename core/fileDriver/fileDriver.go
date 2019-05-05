@@ -3,13 +3,10 @@ package fileDriver
 import (
 	"vision/core/fileHandler"
 	"vision/core/models"
-	"fmt"
-	//"errors"
 )
 
 func FileDriver(request *models.QueryHolder) (string, error) {
 	isClean, err := request.Sanitise()
-	fmt.Println(isClean)
 	if err != nil {
 		return "", err
 	}
