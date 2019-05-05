@@ -7,7 +7,7 @@ import (
 
 func FileDriver(request *models.QueryHolder) (string, error) {
 	isClean, err := request.Sanitise()
-	if err != nil {
+	if err != nil || !isClean {
 		return "", err
 	}
 
