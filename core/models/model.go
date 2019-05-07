@@ -28,28 +28,41 @@ type QueryHolder struct {
 	Grep string
 }
 
-func (queryHolder *QueryHolder) Sanitise() (bool, error) {
-	// TODO
-	// check if alias is proper
-	// either alias or path should be present but not both
-	// check if the value for readFrom is valid
-	// check if regex is valid
-	// check if negateRegex is valid
-	// sanitize grep command !! very important !!
-
-	// check if the file does not exists or if the path is a directory
-
-	stat, err := os.Stat(queryHolder.Path)
+func isValidPath(path string) (error) {
+	stat, err := os.Stat(path)
 	if os.IsNotExist(err) {
-		return false, errors.New("FILE_NOT_FOUND")
+		return errors.New("FILE_NOT_FOUND")
 	}
 
 	if err != nil {
-		return false, err
+		return err
 	}
 
 	if stat.IsDir() {
-		return false, errors.New("PATH_IS_A_DIRECTORY")
+		return errors.New("PATH_IS_A_DIRECTORY")
+	}
+
+	return nil
+}
+
+func (queryHolder *QueryHolder) Sanitise(aliases [string]string) (bool, error) {
+	// TODO
+	// check if regex is valid
+	// check if negateRegex is valid
+	// sanitize grep command !! very important !!
+	path := ""
+
+	if queryHolder.Path != "" {
+		path = queryHolder.Path
+	} else if queryHolder.Alias != "" {
+		path = aliases[queryHolder.Alias]
+	} else {
+		return false, errors.New("BOTH_PATH_AND_ALIAS_IS_EMPTY")
+	}
+
+	err := isValidPath(path)
+	if err != nil {
+		return false, err
 	}
 
 	// check if readFrom is invalid
