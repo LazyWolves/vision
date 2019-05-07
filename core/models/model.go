@@ -38,9 +38,6 @@ func (queryHolder *QueryHolder) Sanitise() (bool, error) {
 	// sanitize grep command !! very important !!
 
 	// check if the file does not exists or if the path is a directory
-	if _, err := os.Stat(queryHolder.Path); os.IsNotExist(err) {
-		
-	}
 
 	stat, err := os.Stat(queryHolder.Path)
 	if os.IsNotExist(err) {
