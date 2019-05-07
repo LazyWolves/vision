@@ -45,7 +45,7 @@ func isValidPath(path string) (error) {
 	return nil
 }
 
-func (queryHolder *QueryHolder) Sanitise(aliases [string]string) (bool, error) {
+func (queryHolder *QueryHolder) Sanitise(aliases map[string]string) (bool, error) {
 	// TODO
 	// check if regex is valid
 	// check if negateRegex is valid

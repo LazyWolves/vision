@@ -88,7 +88,7 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	//fmt.Println(posRegex)
 	//fmt.Println(negRegex)
 
-	response, err := fileDriver.FileDriver(request)
+	response, err := fileDriver.FileDriver(request, aliases)
 	if err != nil {
 		fmt.Fprintf(w, err.Error())
 		return
