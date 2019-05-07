@@ -44,8 +44,9 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	limitSlice, isLimit := r.URL.Query()["limit"]
 	posRegexSlice, isPosRegex := r.URL.Query()["filterBy"]
 	negRegexSlice, isNegRegex := r.URL.Query()["ignore"]
+	aliasSlice, isAlias := r.URL.Query()["alias"]
 
-	path, readFrom, limit, posRegex, negRegex := "", "tail", int64(10), "", ""
+	path, readFrom, limit, posRegex, negRegex, alias := "", "tail", int64(10), "", "", ""
 
 	if isPath {
 		path = pathSlice[0]
@@ -72,9 +73,13 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 		negRegex = negRegexSlice[0]
 	}
 
+	if isAlias {
+		alias = aliasSlice[0]
+	}
+
 	request := &models.QueryHolder{
 		Path: path,
-		Alias: "",
+		Alias: alias,
 		ReadFrom: readFrom,
 		Limit: limit,
 		Regex: posRegex,

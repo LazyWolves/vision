@@ -51,11 +51,15 @@ func (queryHolder *QueryHolder) Sanitise(aliases map[string]string) (bool, error
 	// check if negateRegex is valid
 	// sanitize grep command !! very important !!
 	path := ""
+	exists := false
 
 	if queryHolder.Path != "" {
 		path = queryHolder.Path
 	} else if queryHolder.Alias != "" {
-		path = aliases[queryHolder.Alias]
+		path, exists = aliases[queryHolder.Alias]
+		if !exists {
+			return false, errors.New("ALIAS_DOES_NOT_EXISTS")
+		}
 	} else {
 		return false, errors.New("BOTH_PATH_AND_ALIAS_IS_EMPTY")
 	}
