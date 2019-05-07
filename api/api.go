@@ -7,11 +7,24 @@ import (
 	//"reflect"
 	"vision/core/fileDriver"
 	"vision/core/models"
+	//"os"
+	"io/ioutil"
+	"encoding/json"
 )
 
+var configJson models.ConfigModel
+var aliases map[string]string
+var configJsonPath = "/etc/vision/config.json"
+
 func Api() {
+	loadConfigJson()
 	http.HandleFunc("/", apiHandler)
 	http.ListenAndServe(":8080", nil)
+}
+
+func loadConfigJson() {
+	file, _ := ioutil.ReadFile(configJsonPath)
+	_ = json.Unmarshal([]byte(file), &configJson)
 }
 
 func apiHandler(w http.ResponseWriter, r *http.Request) {
