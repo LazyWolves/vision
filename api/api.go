@@ -18,6 +18,7 @@ var configJsonPath = "/etc/vision/config.json"
 
 func Api() {
 	loadConfigJson()
+	createAliasMap()
 	http.HandleFunc("/", apiHandler)
 	http.ListenAndServe(":8080", nil)
 }
@@ -25,6 +26,14 @@ func Api() {
 func loadConfigJson() {
 	file, _ := ioutil.ReadFile(configJsonPath)
 	_ = json.Unmarshal([]byte(file), &configJson)
+}
+
+func createAliasMap() {
+	aliasesTemp := make(map[string]string)
+	for _, alias := range configJson.Aliases {
+		aliasesTemp[alias.AliasName] = alias.AliasTo
+	}
+	aliases = aliasesTemp
 }
 
 func apiHandler(w http.ResponseWriter, r *http.Request) {
