@@ -20,8 +20,8 @@ func FileDriver(request *models.QueryHolder, aliases map[string]string, configJs
 		filePath = aliases[request.Alias]
 	}
 
-	errAcl := util.checkAcls(filePath, configJson)
-	if errAcl == nil {
+	errAcl := util.CheckAcls(filePath, configJson)
+	if errAcl != nil {
 		return "", errAcl
 	}
 

@@ -1,11 +1,12 @@
 package util
 import (
 	"vision/core/models"
-	"strings",
+	"strings"
 	"errors"
+	//"fmt"
 )
 
-func checkAcls(path String, configJson *models.configModel) (error) {
+func CheckAcls(path string, configJson *models.ConfigModel) (error) {
 	if configJson.AllowAll == true {
 		blockFor := configJson.BlockFor
 		if len(blockFor) == 0 {
