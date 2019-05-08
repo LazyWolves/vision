@@ -20,22 +20,22 @@ func Api() {
 	loadConfigJson()
 	createAliasMap()
 	http.HandleFunc("/", apiHandler)
+	http.HandleFunc("/aliases", aliasHandler)
 	http.ListenAndServe(":8080", nil)
 }
 
 func allAliases() (string) {
 	aliasesSlice := make([]string, 0, 10)
 	for key, value := range aliases {
-		aliasesSlice = append(aliasesSlice, "%s : %s", key, value)
+		aliasesSlice = append(aliasesSlice, key + " : " + value)
 	}
 
 	if len(aliasesSlice) != 0 {
-		aliasesString = strings.join(aliasesSlice, "\n")
+		aliasesString := strings.Join(aliasesSlice, "\n")
 		return aliasesString
 	}
 
 	return ""
-
 }
 
 func loadConfigJson() {
@@ -49,6 +49,11 @@ func createAliasMap() {
 		aliasesTemp[alias.AliasName] = alias.AliasTo
 	}
 	aliases = aliasesTemp
+}
+
+func aliasHandler(w http.ResponseWriter, r *http.Request) {
+	response := allAliases()
+	fmt.Fprintf(w, response)
 }
 
 func apiHandler(w http.ResponseWriter, r *http.Request) {
