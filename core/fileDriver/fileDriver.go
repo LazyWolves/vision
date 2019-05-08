@@ -3,9 +3,10 @@ package fileDriver
 import (
 	"vision/core/fileHandler"
 	"vision/core/models"
+	"vision/core/util"
 )
 
-func FileDriver(request *models.QueryHolder, aliases map[string]string) (string, error) {
+func FileDriver(request *models.QueryHolder, aliases map[string]string, configJson *models.ConfigModel) (string, error) {
 	isClean, err := request.Sanitise(aliases)
 	if err != nil || !isClean {
 		return "", err
@@ -17,6 +18,11 @@ func FileDriver(request *models.QueryHolder, aliases map[string]string) (string,
 		filePath = request.Path
 	} else if request.Alias != "" {
 		filePath = aliases[request.Alias]
+	}
+
+	errAcl := util.checkAcls(filePath, configJson)
+	if errAcl == nil {
+		return "", errAcl
 	}
 
 	if request.ReadFrom == "head" {
