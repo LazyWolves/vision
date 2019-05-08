@@ -7,7 +7,7 @@ import (
 	//"reflect"
 	"vision/core/fileDriver"
 	"vision/core/models"
-	//"os"
+	"strings"
 	"io/ioutil"
 	"encoding/json"
 )
@@ -21,6 +21,21 @@ func Api() {
 	createAliasMap()
 	http.HandleFunc("/", apiHandler)
 	http.ListenAndServe(":8080", nil)
+}
+
+func allAliases() (string) {
+	aliasesSlice := make([]string, 0, 10)
+	for key, value := range aliases {
+		aliasesSlice = append(aliasesSlice, "%s : %s", key, value)
+	}
+
+	if len(aliasesSlice) != 0 {
+		aliasesString = strings.join(aliasesSlice, "\n")
+		return aliasesString
+	}
+
+	return ""
+
 }
 
 func loadConfigJson() {
