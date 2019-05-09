@@ -13,6 +13,9 @@ func CheckAcls(path string, configJson *models.ConfigModel) (error) {
 			return nil
 		}
 		for _, blockedEntity := range configJson.BlockFor {
+			if blockedEntity == "" {
+				continue
+			}
 			if strings.HasPrefix(path, blockedEntity) {
 				return errors.New("FILE_NOT_ALLOWED_TO_BE_VIEWED")
 			}
@@ -26,6 +29,9 @@ func CheckAcls(path string, configJson *models.ConfigModel) (error) {
 		}
 
 		for _, allowedEntity := range configJson.AllowFor {
+			if allowedEntity == "" {
+				continue
+			}
 			if strings.HasPrefix(path, allowedEntity) {
 				return nil
 			}
