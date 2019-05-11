@@ -5,6 +5,7 @@ GOCLEAN=$(GOCMD) clean
 BINARY_NAME=vision
 DIST_DIR=dist
 SRC=main/vision.go
+prefix=/usr/local
 
 all: build
 
@@ -21,3 +22,6 @@ clean:
 
 run:
 		$(GORUN) $(SRC)
+
+install:
+		@install -D $(DIST_DIR)/$(BINARY_NAME) $(DESTDIR)$(prefix)/bin/$(BINARY_NAME)
