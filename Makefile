@@ -25,3 +25,8 @@ run:
 
 install:
 		@install -D $(DIST_DIR)/$(BINARY_NAME) $(DESTDIR)$(prefix)/bin/$(BINARY_NAME)
+		@echo "installed vision"
+
+uninstall:
+		@rm -f $(DESTDIR)$(prefix)/bin/$(BINARY_NAME)
+		@echo "uinsalled vision"
