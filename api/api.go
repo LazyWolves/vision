@@ -21,7 +21,7 @@ func Api() {
 	createAliasMap()
 	http.HandleFunc("/", apiHandler)
 	http.HandleFunc("/aliases", aliasHandler)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":" + strconv.FormatInt(configJson.Port, 10), nil)
 }
 
 func allAliases() (string) {

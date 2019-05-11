@@ -1,0 +1,11 @@
+{
+	"port": 8080,
+	"allow_all": true,
+	"block_for": [
+		""
+	],
+	"allow_for": [
+		""
+	],
+	"aliases": []
+}
