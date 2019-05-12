@@ -27,6 +27,7 @@ run:
 install:
 		@install -D $(DIST_DIR)/$(BINARY_NAME) $(DESTDIR)$(prefix)/bin/$(BINARY_NAME)
 		@mkdir -p $(DESTDIR)/etc/$(BINARY_NAME)
+		@mkdir -p $(DESTDIR)/etc/systemd/system
 		@cp $(CONF_DIR)/config.json $(DESTDIR)/etc/vision/config.json
 		@cp $(CONF_DIR)/vision.service $(DESTDIR)/etc/systemd/system/vision.service
 		@echo "installed vision"
