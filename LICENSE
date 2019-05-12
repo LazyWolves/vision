@@ -1,0 +1,11 @@
+--2019-05-12 20:23:18--  https://www.gnu.org/licenses/fdl.txt
+Resolving www.gnu.org (www.gnu.org)... 209.51.188.148, 2001:470:142:3::a
+Connecting to www.gnu.org (www.gnu.org)|209.51.188.148|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 22964 (22K) [text/plain]
+Saving to: ‘fdl.txt’
+
+     0K .......... .......... ..                              100% 77.8K=0.3s
+
+2019-05-12 20:23:21 (77.8 KB/s) - ‘fdl.txt’ saved [22964/22964]
+
