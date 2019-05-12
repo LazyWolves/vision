@@ -36,3 +36,5 @@ uninstall:
 		@rm -rf /etc/vision
 		@rm -rf /etc/systemd/system/vision.service
 		@echo "uinsalled vision"
+
+.PHONY: all build clean run install uninstall
