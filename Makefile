@@ -26,15 +26,15 @@ run:
 
 install:
 		@install -D $(DIST_DIR)/$(BINARY_NAME) $(DESTDIR)$(prefix)/bin/$(BINARY_NAME)
-		@mkdir -p /etc/$(BINARY_NAME)
-		@cp $(CONF_DIR)/config.json /etc/vision/config.json
-		@cp $(CONF_DIR)/vision.service /etc/systemd/system/vision.service
+		@mkdir -p $(DESTDIR)/etc/$(BINARY_NAME)
+		@cp $(CONF_DIR)/config.json $(DESTDIR)/etc/vision/config.json
+		@cp $(CONF_DIR)/vision.service $(DESTDIR)/etc/systemd/system/vision.service
 		@echo "installed vision"
 
 uninstall:
 		@rm -f $(DESTDIR)$(prefix)/bin/$(BINARY_NAME)
-		@rm -rf /etc/vision
-		@rm -rf /etc/systemd/system/vision.service
+		@rm -rf $(DESTDIR)/etc/vision
+		@rm -rf $(DESTDIR)/etc/systemd/system/vision.service
 		@echo "uinsalled vision"
 
 .PHONY: all build clean run install uninstall
