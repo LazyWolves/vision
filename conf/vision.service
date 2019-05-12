@@ -1,0 +1,11 @@
+[Unit]
+Description=Systemd service for vision
+After=network.target
+
+[Service]
+User=root
+Group=root
+ExecStart=/usr/local/bin/vision
+
+[Install]
+WantedBy=multi-user.target

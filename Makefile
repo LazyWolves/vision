@@ -5,6 +5,7 @@ GOCLEAN=$(GOCMD) clean
 BINARY_NAME=vision
 DIST_DIR=dist
 SRC=main/vision.go
+CONF_DIR=conf
 prefix=/usr/local
 
 all: build
@@ -25,8 +26,13 @@ run:
 
 install:
 		@install -D $(DIST_DIR)/$(BINARY_NAME) $(DESTDIR)$(prefix)/bin/$(BINARY_NAME)
+		@mkdir -p /etc/$(BINARY_NAME)
+		@cp $(CONF_DIR)/config.json /etc/vision/config.json
+		@cp $(CONF_DIR)/vision.service /etc/systemd/system/vision.service
 		@echo "installed vision"
 
 uninstall:
 		@rm -f $(DESTDIR)$(prefix)/bin/$(BINARY_NAME)
+		@rm -rf /etc/vision
+		@rm -rf /etc/systemd/system/vision.service
 		@echo "uinsalled vision"
