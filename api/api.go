@@ -1,10 +1,10 @@
+// api package contains the main api endpoints which allows users to view resources
 package api
 
 import (
 	"net/http"
 	"fmt"
 	"strconv"
-	//"reflect"
 	"vision/core/fileDriver"
 	"vision/core/models"
 	"strings"
@@ -12,30 +12,23 @@ import (
 	"encoding/json"
 )
 
+// configJson struct is the model for storing and holding the config data
 var configJson models.ConfigModel
+
+// aliases is a hashmap to create a one to one mapping
+// between the alias name and resource path
 var aliases map[string]string
+
+// Store path to config file
 var configJsonPath = "/etc/vision/config.json"
 
+// Main function which loads config, creates alias hash and attaches handlers to routes
 func Api() {
 	loadConfigJson()
 	createAliasMap()
 	http.HandleFunc("/", apiHandler)
 	http.HandleFunc("/aliases", aliasHandler)
 	http.ListenAndServe(":" + strconv.FormatInt(configJson.Port, 10), nil)
-}
-
-func allAliases() (string) {
-	aliasesSlice := make([]string, 0, 10)
-	for key, value := range aliases {
-		aliasesSlice = append(aliasesSlice, key + " : " + value)
-	}
-
-	if len(aliasesSlice) != 0 {
-		aliasesString := strings.Join(aliasesSlice, "\n")
-		return aliasesString
-	}
-
-	return ""
 }
 
 func loadConfigJson() {
@@ -54,6 +47,20 @@ func createAliasMap() {
 func aliasHandler(w http.ResponseWriter, r *http.Request) {
 	response := allAliases()
 	fmt.Fprintf(w, response)
+}
+
+func allAliases() (string) {
+	aliasesSlice := make([]string, 0, 10)
+	for key, value := range aliases {
+		aliasesSlice = append(aliasesSlice, key + " : " + value)
+	}
+
+	if len(aliasesSlice) != 0 {
+		aliasesString := strings.Join(aliasesSlice, "\n")
+		return aliasesString
+	}
+
+	return ""
 }
 
 func apiHandler(w http.ResponseWriter, r *http.Request) {
@@ -106,12 +113,6 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 		NegateRegex: negRegex,
 		Grep: "",
 	}
-
-	//fmt.Println(path)
-	//fmt.Println(readFrom)
-	//fmt.Println(limit)
-	//fmt.Println(posRegex)
-	//fmt.Println(negRegex)
 
 	response, err := fileDriver.FileDriver(request, aliases, &configJson)
 	if err != nil {
