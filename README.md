@@ -81,4 +81,58 @@ make clean
 The above will uninstall vision, remove service and config files and clean the build (remove the dist directory containing
 vision binary)
 
+## Configuring Vision
+
+The config file for vision will be present at /etc/vision/config.json
+As you have already guessed, the config file is written format.
+
+Given below is a sample config file
+
+```{
+	    "port": 8080,
+	    "allow_all": true,
+	    "block_for": [
+		          "path1",
+              "path2",
+              "dir1",
+              "dir2"
+	    ],
+	    "allow_for": [
+		          ""
+	    ],
+	    "aliases": [
+              {
+                "alias_name" : "apache2",
+                "alias_to" : "/var/log/apache2/access.log",
+              },
+              {
+                "alias_name" : "kafka"
+                "alias_to" : "/var/log/kafka/server.log"
+              }
+      ]
+   }
+
+```
+
+Below are the description of each field :
+
+- **port** : it is the port on which vision will listen. Make sure the port you are specifying over here is free
+
+- **allow_all** : If true, all the files in your system can be view via vision except those present in the block_for
+                  list. Its value can be true or false. If false, no file in your system can be viewed via vision, except
+                  those present in allow_for list.
+                  
+- **allow_for** : Takes a list of paths. When **allow_all** is **false**, only the file paths present in this list will be
+                  visible via vision. The list may also contain a directory path. In this case, all the files in that directory
+                  will be visible.
+                
+- **block_for** : Takes a list of paths. When **allow_all** is **true**, the file paths present in this list will not be visible
+                  via vision. The list may also contain a directory path. In that case, all the files in that directory will
+                  be unaccessable via vision.
+                  
+- **aliases** :             
+    
+
+
+
 
