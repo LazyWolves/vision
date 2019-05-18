@@ -6,6 +6,10 @@ import (
 	"errors"
 )
 
+// Function for checking Acls
+// Params:
+//		path : Path to resource
+//		configJson : Struct containing config json
 func CheckAcls(path string, configJson *models.ConfigModel) (error) {
 	if configJson.AllowAll == true {
 		blockFor := configJson.BlockFor
