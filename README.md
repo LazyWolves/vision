@@ -133,6 +133,9 @@ Below are the description of each field :
 - **aliases** :  Takes a list of objects. An object contains two keys - **alias_name** and **alias_to**. alias_name is the
 		 name of the alias (basically a short name for a long path). Once a alias has been added, the corresponding
 		 resource can be queried using the alias without providing the full path all the time.
+		 
+It is to be noted that allow_for is used when allow_all is set to **false** and block_for is used when allow_all is set to
+**true**. Providing value for both allow_for and block_for will not have any affect.
     
 
 
