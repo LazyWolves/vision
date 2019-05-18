@@ -33,16 +33,23 @@ func Api() {
 	// The map will be stored in memory all the time
 	// to access repeated file access
 	createAliasMap()
+
+	// Create route for / path and add handler function for it
 	http.HandleFunc("/", apiHandler)
+
+	// Create route for /aliases path and add handler function to it
 	http.HandleFunc("/aliases", aliasHandler)
 	http.ListenAndServe(":" + strconv.FormatInt(configJson.Port, 10), nil)
 }
 
+// This function will read config file and load the json into memory
 func loadConfigJson() {
 	file, _ := ioutil.ReadFile(configJsonPath)
 	_ = json.Unmarshal([]byte(file), &configJson)
 }
 
+// This function will create a map (using the data in config json) to
+// store aliases and their corresponding paths and store it in memory.
 func createAliasMap() {
 	aliasesTemp := make(map[string]string)
 	for _, alias := range configJson.Aliases {
@@ -51,11 +58,15 @@ func createAliasMap() {
 	aliases = aliasesTemp
 }
 
+// This is the handler for serving aliases. It returns the
+// alias map as a list
 func aliasHandler(w http.ResponseWriter, r *http.Request) {
 	response := allAliases()
 	fmt.Fprintf(w, response)
 }
 
+// This function creates a string representing the alias map with
+// proper formatting.
 func allAliases() (string) {
 	aliasesSlice := make([]string, 0, 10)
 	for key, value := range aliases {
@@ -70,6 +81,17 @@ func allAliases() (string) {
 	return ""
 }
 
+// This is the handler for root. It takes in a number of URL query params
+// and it returns resource accordingly.
+// It takes the followung URL params :
+// 		path : The path to the resource to be viewed. For example it can be path to
+//			   a log file
+//		readFrom : It specifies the end from which the resource is to be read -
+//				   head or tail. Accordingly it can take only two values: head|tail
+//		limit : It denotes the number of lines to be read from that resource.
+//				For example the number of lines of a log file to be read
+//		posRegex : The value should be a regex. The regex will be used to filter lines
+//				   from the resource
 func apiHandler(w http.ResponseWriter, r *http.Request) {
 	//w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 
