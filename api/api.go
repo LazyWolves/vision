@@ -84,17 +84,21 @@ func allAliases() (string) {
 // This is the handler for root. It takes in a number of URL query params
 // and it returns resource accordingly.
 // It takes the followung URL params :
-// 		path : The path to the resource to be viewed. For example it can be path to
+// 		path : The path (absolute) to the resource to be viewed. For example it can be path to
 //			   a log file
 //		readFrom : It specifies the end from which the resource is to be read -
 //				   head or tail. Accordingly it can take only two values: head|tail
 //		limit : It denotes the number of lines to be read from that resource.
-//				For example the number of lines of a log file to be read
-//		posRegex : The value should be a regex. The regex will be used to filter lines
-//				   from the resource
+//				For example the number of lines of a log file to be read.
+//				It must be a integer greater than 0
+//		filterBy : The value should be a regex. The regex will be used to filter lines
+//				   from the resource specified and only those lines will be returned.
+//		ignore :   The value should be a regex. The regex will be used as a negative
+//				   filter to remove lines which will contain texts matching the regex.
+//		alias :	   This represents alias to a path. Must be configured in config json.
 func apiHandler(w http.ResponseWriter, r *http.Request) {
-	//w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 
+	// The URL parameters are extracted and stored in respective variables
 	pathSlice, isPath := r.URL.Query()["path"]
 	readFromSlice, isReadFrom := r.URL.Query()["readFrom"]
 	limitSlice, isLimit := r.URL.Query()["limit"]
@@ -112,6 +116,7 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 		readFrom = readFromSlice[0]
 	}
 
+	// Convert the limit to int64 type and return error if any during conversion
 	if isLimit {
 		limitTemp, err := strconv.ParseInt(limitSlice[0], 10, 64)
 		if err != nil {
@@ -133,6 +138,8 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 		alias = aliasSlice[0]
 	}
 
+	// Store all the URL params in QueryHolder struct.
+	// This is for easy handling of the request
 	request := &models.QueryHolder{
 		Path: path,
 		Alias: alias,
@@ -143,11 +150,15 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 		Grep: "",
 	}
 
+	// Get the response for the current request and write it to the response
+	// of the current request and send it ot user. If FIleDriver returns
+	// any error then send it to user.
 	response, err := fileDriver.FileDriver(request, aliases, &configJson)
 	if err != nil {
 		fmt.Fprintf(w, err.Error())
 		return
 	}
 
+	// Send response back to user
 	fmt.Fprintf(w, response)
 }
