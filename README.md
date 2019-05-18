@@ -130,7 +130,9 @@ Below are the description of each field :
                   via vision. The list may also contain a directory path. In that case, all the files in that directory will
                   be unaccessable via vision.
                   
-- **aliases** :             
+- **aliases** :  Takes a list of objects. An object contains two keys - **alias_name** and **alias_to**. alias_name is the
+		 name of the alias (basically a short name for a long path). Once a alias has been added, the corresponding
+		 resource can be queried using the alias without providing the full path all the time.
     
 
 
