@@ -24,7 +24,14 @@ var configJsonPath = "/etc/vision/config.json"
 
 // Main function which loads config, creates alias hash and attaches handlers to routes
 func Api() {
+	// Read the config file and load it into memory as json
+	// The connfig json will be stored in memory throughout the life
+	// time of the object for fast retrieval of config
 	loadConfigJson()
+
+	// Create the alias map for fast retrieval.
+	// The map will be stored in memory all the time
+	// to access repeated file access
 	createAliasMap()
 	http.HandleFunc("/", apiHandler)
 	http.HandleFunc("/aliases", aliasHandler)
