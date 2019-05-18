@@ -19,3 +19,40 @@ for filtering contents and specify number of lines to be read form desired files
   allow_all, allow_for, block_for, via which you can allow certain files to be read or blocked from reading or you can block
   a directory altogether.
   
+## Getting started
+
+## Building from source (for Debian based systems)
+
+You must have go binaries installed on your system and GOPATH and GOROOT set for bulding from source.
+
+Get the repository using the following go command
+```
+go get github.com/djmgit/vision/main
+
+```
+Next enter into vision directory containing the source (you will find it in your GOPATH i,e, go/src/github.com/djmgit/vision)
+and then execute the following make commands
+
+```
+make
+sudo make install
+
+```
+The first command will build vision. Mostly there should not be any issue in this step as vision has no external dependencies.
+It uses only the inbuild go packages.
+The second make command installs the vision binary on your system.
+
+Once vision is installed on your system, you need to start the service using the following
+
+```
+sudo systemctl start vision
+
+```
+Vision assumes you use systemd for managing your services. Otherwise you can run vision using :
+
+```
+/usr/local/bin/vision
+```
+
+By default vision listens on port 8080, however you can change that (see below in configuring vision section)
+
