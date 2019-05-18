@@ -3,7 +3,6 @@ import (
 	"vision/core/models"
 	"strings"
 	"errors"
-	//"fmt"
 )
 
 func CheckAcls(path string, configJson *models.ConfigModel) (error) {

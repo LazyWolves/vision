@@ -28,6 +28,10 @@ type QueryHolder struct {
 	Grep string
 }
 
+// Method to check if the given path is valid. The resource pointed by the
+// path should exists and the resource should not be a directory
+// Params :
+//		path : atring containing resource
 func isValidPath(path string) (error) {
 	stat, err := os.Stat(path)
 	if os.IsNotExist(err) {
@@ -45,14 +49,15 @@ func isValidPath(path string) (error) {
 	return nil
 }
 
+// Function to sanitise the URL query params
+// Params:
+//		aliases : alias map
 func (queryHolder *QueryHolder) Sanitise(aliases map[string]string) (bool, error) {
-	// TODO
-	// check if regex is valid
-	// check if negateRegex is valid
-	// sanitize grep command !! very important !!
 	path := ""
 	exists := false
 
+	// Both path and alias cannot be defined together
+	// Also path will be given higher priority over alias
 	if queryHolder.Path != "" {
 		path = queryHolder.Path
 	} else if queryHolder.Alias != "" {
@@ -64,6 +69,7 @@ func (queryHolder *QueryHolder) Sanitise(aliases map[string]string) (bool, error
 		return false, errors.New("BOTH_PATH_AND_ALIAS_IS_EMPTY")
 	}
 
+	// checks if path is valid.
 	err := isValidPath(path)
 	if err != nil {
 		return false, err
@@ -74,6 +80,7 @@ func (queryHolder *QueryHolder) Sanitise(aliases map[string]string) (bool, error
 		return false, errors.New("INVALID_READ_POS")
 	}
 
+	// limit cannot be negative or 0
 	if queryHolder.Limit <= 0 {
 		return false, errors.New("INVALID_LIMIT")
 	}
