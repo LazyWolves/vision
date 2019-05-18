@@ -136,6 +136,8 @@ Below are the description of each field :
 		 
 It is to be noted that allow_for is used when allow_all is set to **false** and block_for is used when allow_all is set to
 **true**. Providing value for both allow_for and block_for will not have any affect.
+
+## Usage and API endpoints
     
 
 
