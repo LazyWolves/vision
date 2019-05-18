@@ -1,3 +1,4 @@
+// This package contains some utility functions for vision
 package util
 import (
 	"vision/core/models"

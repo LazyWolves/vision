@@ -1,3 +1,5 @@
+// Package containing struct definitions for holding configs and params used
+// in vision
 package models
 
 import (
