@@ -9,6 +9,10 @@ import (
 
 // This function processes the requests and generates the response. It uses sanitise function
 // to sanitise the requests and then uses fileHandler package to generate response.
+// Params:
+// 		request : Struct of type QuireyHolder containing all the URL params
+//		aliases : Alias map
+//		configJson : Struct of type ConfigModel containing all the config params
 func FileDriver(request *models.QueryHolder, aliases map[string]string, configJson *models.ConfigModel) (string, error) {
 
 	// Sanitise the request
@@ -34,7 +38,7 @@ func FileDriver(request *models.QueryHolder, aliases map[string]string, configJs
 		return "", errAcl
 	}
 
-	// Read from head or from tail as the request may be
+	// Read from head or from tail as the request may be.
 	if request.ReadFrom == "head" {
 		return fileHandler.ReadFromHead(filePath, request.Regex, request.NegateRegex, request.Limit)
 	} else {
