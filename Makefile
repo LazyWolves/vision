@@ -1,4 +1,5 @@
 GOCMD=go
+GODOC=godoc
 GOBUILD=$(GOCMD) build
 GORUN=$(GOCMD) run
 GOCLEAN=$(GOCMD) clean
@@ -37,5 +38,8 @@ uninstall:
 		@rm -rf $(DESTDIR)/etc/vision
 		@rm -rf $(DESTDIR)/etc/systemd/system/vision.service
 		@echo "uinsalled vision"
+
+doc:
+		@$(GODOC) -http=:8080
 
 .PHONY: all build clean run install uninstall
