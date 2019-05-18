@@ -56,3 +56,29 @@ Vision assumes you use systemd for managing your services. Otherwise you can run
 
 By default vision listens on port 8080, however you can change that (see below in configuring vision section)
 
+To verify that vision was installed properly and is working as expected, hit the following URL on browser :
+
+```
+[server_ip]:8080/path?=[path_to_a_file_on_your_system]
+```
+You should be able to view the last 10 lines of the file you have mentioned in the path parameter (provided its a valid paht)
+
+## Uninstalling Vision
+
+First stop the service using :
+
+```
+sudo systemctl stop vision
+```
+
+Then uninsall and clean your build using the following (execute them in the vision source folder):
+
+```
+sudo make uninstall
+make clean
+```
+
+The above will uninstall vision, remove service and config files and clean the build (remove the dist directory containing
+vision binary)
+
+
