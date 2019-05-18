@@ -1,3 +1,4 @@
+// Package containing method to process resources
 package fileHandler
 
 import (
@@ -7,6 +8,14 @@ import (
 	"vision/core/util"
 )
 
+// This function takes a string of lines. It splits the string into a list
+// of lines. Then it filetrs the list to get the desired lines. Once it
+// has the desired list of lines it joins them into a single string and
+// returns it back.
+// Params:
+//      lines: String of extracted lines
+//      posRegex : regex for filtering
+//      negRegex : regex for excluding
 func getfilteredLines(lines, posRegex, negRegex string) (string) {
 	lineList := strings.Split(lines, "\n")
 	filteredLines := make([]string, 0, 1)
@@ -26,6 +35,13 @@ func getfilteredLines(lines, posRegex, negRegex string) (string) {
 	return allLines
 }
 
+// This function will read a given resource starting from tail uptil a given numer
+// of lines as specified in limit
+// Params:
+//      path : Path to the resource on filesystem
+//      posRegex : The regex to filter lines
+//      negregex : The regex to exclude lines
+//      numLines : the number of lines to limit to
 func ReadFromTail(path, posRegex, negRegex  string, numLines int64) (string, error) {
     fileHandle, err := os.Open(path)
     if err != nil {
