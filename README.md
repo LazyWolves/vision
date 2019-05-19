@@ -63,6 +63,17 @@ To verify that vision was installed properly and is working as expected, hit the
 ```
 You should be able to view the last 10 lines of the file you have mentioned in the path parameter (provided its a valid paht)
 
+### Building DOC locally
+
+To build the HTML version of the doc and serve locally, execute the following in the repo folder
+
+```
+
+make doc
+
+```
+Then hit ```http://127.0.0.1:6060/pkg/github.com/djmgit/vision/``` on the browser to view the documentaion of the source code.
+
 ## Uninstalling Vision
 
 First stop the service using :
@@ -92,7 +103,7 @@ Given below is a sample config file
 	    "port": 8080,
 	    "allow_all": true,
 	    "block_for": [
-		          "path1",
+	      "path1",
               "path2",
               "dir1",
               "dir2"
