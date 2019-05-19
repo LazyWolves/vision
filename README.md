@@ -164,8 +164,21 @@ http://[server-ip]:[port]?path=/var/log/apache2/access.log
 
 The following will return the first 100 lines of apache access log
 
-http://[server-ip]:[port]?path=/var/log/apache2/access.log
+http://[server-ip]:[port]?path=/var/log/apache2/access.log&readFrom=head&limit=100
 
+The following will return only those lines which contain the word INFO from kafka log
+
+http://[server-ip]:[port]?path=/var/log/kafka/server.log&readFrom=head&limit=100&filterBy=INFO
+
+The following will return only those lines which does not contain the word WARNING from kafka log
+
+http://[server-ip]:[port]?path=/var/log/kafka/server.log&readFrom=head&limit=100&ignore=WARNING
+
+The following will read the first 20 lines of the file aliases by 'nginx'
+
+http://[server-ip]:[port]?alias=nginx&readFrom=head&limit=100&ignore=WARNING
+
+```
 
 
 
