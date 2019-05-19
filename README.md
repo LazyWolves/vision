@@ -138,7 +138,36 @@ It is to be noted that allow_for is used when allow_all is set to **false** and 
 **true**. Providing value for both allow_for and block_for will not have any affect.
 
 ## Usage and API endpoints
+
+The Base path is simply [server_ip]:[port]/
+
+All the options are simply passed as URL params. Only GET method is required.
+
+Following are the options that can be used with vision :
     
+|      Param      |      Type        |      Description       |
+|:----------------|:-----------------|:-----------------------|
+|   path	  |      String      |   Absolute path of the resource file on the remote system|
+|   readFrom 	  |      String      |   Specifies from where to read the file, can be wither of head ot tail|
+|   limit         |      Integer     |   Specifies the number of lines to be read|
+|   filterBy      |  String (regex)  |   A regex to filter out desired lines from the given file. Only thoe lines containing patterns matched by the given regex will be returned.|
+|   ignore        |  String (regex)  |   A regex to exclude lines containing patterns matching the regex |
+|   alias         |  String          |   An alias name. Must be configured beforehand |
+
+Some examples :
+
+```
+The following will return the last 10 lines of apache access log. If limit and readFrom is not mentioned, by default 
+readFrom is tail and limit is 10.
+
+http://[server-ip]:[port]?path=/var/log/apache2/access.log
+
+The following will return the first 100 lines of apache access log
+
+http://[server-ip]:[port]?path=/var/log/apache2/access.log
+
+
+
 
 
 
