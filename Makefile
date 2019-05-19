@@ -40,6 +40,6 @@ uninstall:
 		@echo "uinsalled vision"
 
 doc:
-		@$(GODOC) -http=:8080
+		@$(GODOC) -http=:6060
 
 .PHONY: all build clean run install uninstall
