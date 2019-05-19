@@ -30,3 +30,14 @@ A detailed description of the feature
 How are you planning to implement it, if you want to take it up.
 
 ```
+If you want to work on a Issue, please comment on that issue so that someone assigns you to that issue.
+Once you are assigned to that issue you can procees with hacking vision and sent a Pull Request.
+
+Pull requests should comply the below mentioned template :
+
+```
+#Issue-number : What it fixes (one liner)
+
+Detailed description of what the Pull request is about and waht it does
+
+```
