@@ -191,6 +191,12 @@ http://[server-ip]:[port]?alias=nginx&readFrom=head&limit=100&ignore=WARNING
 
 ```
 
+## Contributing to Vision
+
+All opensource enthusiasts and Golang lovers are most welcome to add more features and fix bugs in vision.
+
+Please have a look at CONTRIBUTING.md
+
 
 
 
