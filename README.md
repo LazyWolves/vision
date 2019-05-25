@@ -21,6 +21,22 @@ for filtering contents and specify number of lines to be read form desired files
   
 ## Getting started
 
+## Installing using debian package
+
+Get the debian package using the following:
+
+```
+wget -O vision_0.1-1_amd64.deb https://github.com/djmgit/vision_debian/blob/master/vision_0.1-1_amd64.deb?raw=true
+
+```
+
+Once the package is downloaded, installing the package using the following
+
+```
+sudo dpkg -i vision_0.1-1_amd64.deb
+
+```
+
 ## Building from source (for Debian based systems)
 
 You must have go binaries installed on your system and GOPATH and GOROOT set for bulding from source.
@@ -39,29 +55,8 @@ sudo make install
 
 ```
 The first command will build vision. Mostly there should not be any issue in this step as vision has no external dependencies.
-It uses only the inbuild go packages.
+Vision uses only the inbuild go packages.
 The second make command installs the vision binary on your system.
-
-Once vision is installed on your system, you need to start the service using the following
-
-```
-sudo systemctl start vision
-
-```
-Vision assumes you use systemd for managing your services. Otherwise you can run vision using :
-
-```
-/usr/local/bin/vision
-```
-
-By default vision listens on port 8080, however you can change that (see below in configuring vision section)
-
-To verify that vision was installed properly and is working as expected, hit the following URL on browser :
-
-```
-[server_ip]:8080/path?=[path_to_a_file_on_your_system]
-```
-You should be able to view the last 10 lines of the file you have mentioned in the path parameter (provided its a valid paht)
 
 ### Building DOC locally
 
@@ -73,6 +68,29 @@ make doc
 
 ```
 Then hit ```http://127.0.0.1:6060/pkg/github.com/djmgit/vision/``` on the browser to view the documentaion of the source code.
+
+## Post Installation : Testing it out
+
+Once vision is installed on your system, you need to start the service using the following
+
+```
+sudo systemctl start vision
+
+```
+Vision assumes you use systemd for managing your services. Otherwise you can run vision using :
+
+```
+/usr/bin/vision
+```
+
+By default vision listens on port 8080, however you can change that (see below in configuring vision section)
+
+To verify that vision was installed properly and is working as expected, hit the following URL on browser :
+
+```
+[server_ip]:8080/path?=[path_to_a_file_on_your_system]
+```
+You should be able to view the last 10 lines of the file you have mentioned in the path parameter (provided its a valid paht)
 
 ## Uninstalling Vision
 
