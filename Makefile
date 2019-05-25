@@ -7,7 +7,7 @@ BINARY_NAME=vision
 DIST_DIR=dist
 SRC=main/vision.go
 CONF_DIR=conf
-prefix=/usr/local
+prefix=/usr
 
 all: build
 
