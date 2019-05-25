@@ -21,7 +21,7 @@ for filtering contents and specify number of lines to be read form desired files
   
 ## Getting started
 
-## Installing using debian package
+## Installing from debian package
 
 Get the debian package using the following:
 
@@ -213,7 +213,7 @@ http://[server-ip]:[port]?alias=nginx&readFrom=head&limit=100&ignore=WARNING
 
 All opensource enthusiasts and Golang lovers are most welcome to add more features and fix bugs in vision.
 
-Please have a look at CONTRIBUTING.md
+Please have a look at <a href="https://github.com/djmgit/vision/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a>
 
 
 
