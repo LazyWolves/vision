@@ -113,7 +113,7 @@ vision binary)
 ## Configuring Vision
 
 The config file for vision will be present at /etc/vision/config.json
-As you have already guessed, the config file is written format.
+As you have already guessed, the config file is written in json format.
 
 Given below is a sample config file
 
