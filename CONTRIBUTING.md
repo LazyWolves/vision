@@ -30,8 +30,8 @@ A detailed description of the feature
 How are you planning to implement it, if you want to take it up.
 
 ```
-If you want to work on a Issue, please comment on that issue so that someone assigns you to that issue.
-Once you are assigned to that issue you can procees with hacking vision and sent a Pull Request.
+If you want to work on an Issue, please comment on that issue so that someone assigns you to that issue.
+Once you are assigned to that issue you can proceed with hacking vision and sent a Pull Request.
 
 Pull requests should comply the below mentioned template :
 
