@@ -38,6 +38,6 @@ Pull requests should comply the below mentioned template :
 ```
 #Issue-number : What it fixes (one liner)
 
-Detailed description of what the Pull request is about and waht it does
+Detailed description of what the Pull request is about and what it does
 
 ```
