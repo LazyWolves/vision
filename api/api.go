@@ -2,14 +2,16 @@
 package api
 
 import (
-	"net/http"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
 	"strconv"
+	"strings"
 	"vision/core/fileDriver"
 	"vision/core/models"
-	"strings"
-	"io/ioutil"
-	"encoding/json"
 )
 
 // configJson struct is the model for storing and holding the config data
@@ -39,12 +41,16 @@ func Api() {
 
 	// Create route for /aliases path and add handler function to it
 	http.HandleFunc("/aliases", aliasHandler)
-	http.ListenAndServe(":" + strconv.FormatInt(configJson.Port, 10), nil)
+	log.Fatal(http.ListenAndServe(":"+strconv.FormatInt(configJson.Port, 10), nil))
 }
 
 // This function will read config file and load the json into memory
 func loadConfigJson() {
-	file, _ := ioutil.ReadFile(configJsonPath)
+	file, err := ioutil.ReadFile(configJsonPath)
+	if err != nil {
+		fmt.Printf("Config file not found.\n")
+		os.Exit(1)
+	}
 	_ = json.Unmarshal([]byte(file), &configJson)
 }
 
@@ -67,10 +73,10 @@ func aliasHandler(w http.ResponseWriter, r *http.Request) {
 
 // This function creates a string representing the alias map with
 // proper formatting.
-func allAliases() (string) {
+func allAliases() string {
 	aliasesSlice := make([]string, 0, 10)
 	for key, value := range aliases {
-		aliasesSlice = append(aliasesSlice, key + " : " + value)
+		aliasesSlice = append(aliasesSlice, key+" : "+value)
 	}
 
 	if len(aliasesSlice) != 0 {
@@ -141,13 +147,13 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	// Store all the URL params in QueryHolder struct.
 	// This is for easy handling of the request
 	request := &models.QueryHolder{
-		Path: path,
-		Alias: alias,
-		ReadFrom: readFrom,
-		Limit: limit,
-		Regex: posRegex,
+		Path:        path,
+		Alias:       alias,
+		ReadFrom:    readFrom,
+		Limit:       limit,
+		Regex:       posRegex,
 		NegateRegex: negRegex,
-		Grep: "",
+		Grep:        "",
 	}
 
 	// Get the response for the current request and write it to the response
