@@ -185,8 +185,9 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	// Get the response for the current request and write it to the response
 	// of the current request and send it ot user. If FIleDriver returns
 	// any error then send it to user.
-	response, err := fileDriver.FileDriver(request, aliases, &configJson)
+	response, err := fileDriver.FileDriver(request, aliases, &configJson, logger)
 	if err != nil {
+		logger.Error(err.Error())
 		fmt.Fprintf(w, err.Error())
 		return
 	}

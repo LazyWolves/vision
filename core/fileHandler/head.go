@@ -7,6 +7,7 @@ import (
 	"io"
 	"strings"
 	"vision/core/util"
+	"github.com/sirupsen/logrus"
 )
 
 // This function will read a given resource starting from head uptil a given numer
@@ -16,7 +17,7 @@ import (
 //		posRegex : The regex to filter lines
 //		negregex : The regex to exclude lines
 //		numLines : the number of lines to limit to
-func ReadFromHead(path, posRegex, negRegex  string, numLines int64) (string, error) {
+func ReadFromHead(path, posRegex, negRegex  string, numLines int64, logger *logrus.Logger) (string, error) {
 	fileHandle, err := os.Open(path)
 	if err != nil {
 		return "", err

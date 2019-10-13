@@ -5,6 +5,7 @@ import (
 	"vision/core/fileHandler"
 	"vision/core/models"
 	"vision/core/util"
+	"github.com/sirupsen/logrus"
 )
 
 // This function processes the requests and generates the response. It uses sanitise function
@@ -13,7 +14,7 @@ import (
 // 		request : Struct of type QuireyHolder containing all the URL params
 //		aliases : Alias map
 //		configJson : Struct of type ConfigModel containing all the config params
-func FileDriver(request *models.QueryHolder, aliases map[string]string, configJson *models.ConfigModel) (string, error) {
+func FileDriver(request *models.QueryHolder, aliases map[string]string, configJson *models.ConfigModel, logger *logrus.Logger) (string, error) {
 
 	// Sanitise the request
 	isClean, err := request.Sanitise(aliases)
@@ -35,13 +36,14 @@ func FileDriver(request *models.QueryHolder, aliases map[string]string, configJs
 	// If allowed then proceed, if not then send suitable message back to user
 	errAcl := util.CheckAcls(filePath, configJson)
 	if errAcl != nil {
+		logger.Error("Access right violation for path : ", filePath)
 		return "", errAcl
 	}
 
 	// Read from head or from tail as the request may be.
 	if request.ReadFrom == "head" {
-		return fileHandler.ReadFromHead(filePath, request.Regex, request.NegateRegex, request.Limit)
+		return fileHandler.ReadFromHead(filePath, request.Regex, request.NegateRegex, request.Limit, logger)
 	} else {
-		return fileHandler.ReadFromTail(filePath, request.Regex, request.NegateRegex, request.Limit)
+		return fileHandler.ReadFromTail(filePath, request.Regex, request.NegateRegex, request.Limit, logger)
 	}
 }

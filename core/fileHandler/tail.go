@@ -5,7 +5,8 @@ import (
 	"os"
 	"io"
 	"strings"
-	"vision/core/util"
+    "vision/core/util"
+    "github.com/sirupsen/logrus"
 )
 
 // This function takes a string of lines. It splits the string into a list
@@ -16,7 +17,7 @@ import (
 //      lines: String of extracted lines
 //      posRegex : regex for filtering
 //      negRegex : regex for excluding
-func getfilteredLines(lines, posRegex, negRegex string) (string) {
+func getfilteredLines(lines, posRegex, negRegex string, logger *logrus.Logger) (string) {
 	lineList := strings.Split(lines, "\n")
 	filteredLines := make([]string, 0, 1)
 
@@ -42,7 +43,7 @@ func getfilteredLines(lines, posRegex, negRegex string) (string) {
 //      posRegex : The regex to filter lines
 //      negregex : The regex to exclude lines
 //      numLines : the number of lines to limit to
-func ReadFromTail(path, posRegex, negRegex  string, numLines int64) (string, error) {
+func ReadFromTail(path, posRegex, negRegex  string, numLines int64, logger *logrus.Logger) (string, error) {
     fileHandle, err := os.Open(path)
     if err != nil {
         return "", err
@@ -89,7 +90,7 @@ func ReadFromTail(path, posRegex, negRegex  string, numLines int64) (string, err
     b := make([]byte, (endPos+1)-finalReadStartPos)
     _, err = fileHandle.ReadAt(b, finalReadStartPos+1)
     if err == io.EOF {
-        return getfilteredLines(string(b), posRegex, negRegex), nil
+        return getfilteredLines(string(b), posRegex, negRegex, logger), nil
     } else if err != nil {
         return "", err
     }
