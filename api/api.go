@@ -24,6 +24,9 @@ var aliases map[string]string
 // Store path to config file
 var configJsonPath = "/etc/vision/config.json"
 
+// Store path to log file
+var logFilePath = "/var/log/vision/vision.log"
+
 // Main function which loads config, creates alias hash and attaches handlers to routes
 func Api() {
 	// Read the config file and load it into memory as json
