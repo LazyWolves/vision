@@ -12,10 +12,15 @@ import (
 	"strings"
 	"vision/core/fileDriver"
 	"vision/core/models"
+	"vision/core/util"
+	"github.com/sirupsen/logrus"
 )
 
 // configJson struct is the model for storing and holding the config data
 var configJson models.ConfigModel
+
+// Logger object for writing logs to file
+var logger *logrus.Logger
 
 // aliases is a hashmap to create a one to one mapping
 // between the alias name and resource path
@@ -38,6 +43,21 @@ func Api() {
 	// The map will be stored in memory all the time
 	// to allow repeated file access
 	createAliasMap()
+
+	// Open log file for logging purpose and initialise logger object
+	fileHandler, err := os.OpenFile(logFilePath,  os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+
+	// CLose the log file before the function returns
+	defer fileHandler.Close()
+
+	// Get an instance of logger
+	logger = util.SetupLogger()
+
+	if err != nil {
+		logger.SetOutput(fileHandler)
+	} else {
+		logger.Warning("Could not open log file : %s", logFilePath)
+	}
 
 	// Create route for / path and add handler function for it
 	http.HandleFunc("/", apiHandler)
