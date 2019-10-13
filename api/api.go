@@ -33,7 +33,7 @@ func Api() {
 
 	// Create the alias map for fast retrieval.
 	// The map will be stored in memory all the time
-	// to access repeated file access
+	// to allow repeated file access
 	createAliasMap()
 
 	// Create route for / path and add handler function for it
