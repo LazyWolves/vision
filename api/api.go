@@ -53,10 +53,13 @@ func Api() {
 	// Get an instance of logger
 	logger = util.SetupLogger()
 
+	// Notify user if log file could not be opened
 	if err != nil {
-		logger.SetOutput(fileHandler)
+		logger.Warning("Could not open log file : ", logFilePath)
 	} else {
-		logger.Warning("Could not open log file : %s", logFilePath)
+
+		// If the log file could be loaded then use it in logger object
+		logger.SetOutput(fileHandler)
 	}
 
 	// Create route for / path and add handler function for it
