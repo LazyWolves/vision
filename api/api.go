@@ -141,7 +141,8 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	// variable to store request log
 	requestLog := make([]string, 0, 1)
 
-	requestLog = append(requestLog, "Remote_client_address : " + r.RemoteAddr)
+	// Get remote client
+	remote_client := r.RemoteAddr
 
 	path, readFrom, limit, posRegex, negRegex, alias := "", "tail", int64(10), "", "", ""
 
@@ -193,12 +194,19 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 		Grep:        "",
 	}
 
+	// Log request
+	logger.WithFields(logrus.Fields{
+		"remote_client": remote_client,
+	}).Info(strings.Join(requestLog, " "))
+
 	// Get the response for the current request and write it to the response
 	// of the current request and send it ot user. If FIleDriver returns
 	// any error then send it to user.
 	response, err := fileDriver.FileDriver(request, aliases, &configJson, logger)
 	if err != nil {
-		logger.Error(err.Error())
+		logger.WithFields(logrus.Fields{
+			"remote_client": remote_client,
+		}).Error(err.Error())
 		fmt.Fprintf(w, err.Error())
 		return
 	}
