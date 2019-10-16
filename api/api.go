@@ -138,14 +138,21 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	negRegexSlice, isNegRegex := r.URL.Query()["ignore"]
 	aliasSlice, isAlias := r.URL.Query()["alias"]
 
+	// variable to store request log
+	requestLog := make([]string, 0, 1)
+
+	requestLog = append(requestLog, "Remote_client_address : " + r.RemoteAddr)
+
 	path, readFrom, limit, posRegex, negRegex, alias := "", "tail", int64(10), "", "", ""
 
 	if isPath {
 		path = pathSlice[0]
+		requestLog = append(requestLog, "path : " + path)
 	}
 
 	if isReadFrom {
 		readFrom = readFromSlice[0]
+		requestLog = append(requestLog, "readFrom : " + readFrom)
 	}
 
 	// Convert the limit to int64 type and return error if any during conversion
@@ -156,18 +163,22 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		limit = limitTemp
+		requestLog = append(requestLog, "limit : " + limitSlice[0])
 	}
 
 	if isPosRegex {
 		posRegex = posRegexSlice[0]
+		requestLog = append(requestLog, "filterBy : " + posRegex)
 	}
 
 	if isNegRegex {
 		negRegex = negRegexSlice[0]
+		requestLog = append(requestLog, "ignore : " + negRegex)
 	}
 
 	if isAlias {
 		alias = aliasSlice[0]
+		requestLog = append(requestLog, "alias : " + alias)
 	}
 
 	// Store all the URL params in QueryHolder struct.
