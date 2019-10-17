@@ -13,6 +13,7 @@ import (
 	"vision/core/fileDriver"
 	"vision/core/models"
 	"vision/core/util"
+	"vision/core/apiDoc"
 	"github.com/sirupsen/logrus"
 )
 
@@ -67,6 +68,7 @@ func Api() {
 
 	// Create route for /aliases path and add handler function to it
 	http.HandleFunc("/aliases", aliasHandler)
+	http.HandleFunc("/apiDoc", apiDocHandler)
 	log.Fatal(http.ListenAndServe(":"+strconv.FormatInt(configJson.Port, 10), nil))
 }
 
@@ -88,6 +90,12 @@ func createAliasMap() {
 		aliasesTemp[alias.AliasName] = alias.AliasTo
 	}
 	aliases = aliasesTemp
+}
+
+// Function to show API Doc
+func apiDocHandler(w http.ResponseWriter, r *http.Request) {
+	response := apiDoc.ApiDocString
+	fmt.Fprintf(w, response)
 }
 
 // This is the handler for serving aliases. It returns the
