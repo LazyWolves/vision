@@ -160,6 +160,9 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 	if isLimit {
 		limitTemp, err := strconv.ParseInt(limitSlice[0], 10, 64)
 		if err != nil {
+			logger.WithFields(logrus.Fields{
+				"remote_client": remote_client,
+			}).Error(err.Error())
 			fmt.Fprintf(w, err.Error())
 			return
 		}
