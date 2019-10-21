@@ -96,3 +96,56 @@ func TestHeadWithPosFiler(t *testing.T) {
 	// removing test file
 	removeTestFile()
 }
+
+func TestHeadWithNegFiler(t *testing.T) {
+
+	// setting up test file
+	createTestFile()
+
+	content, err := ReadFromHead("./test-file.txt", "", "HTTP", 100, nil)
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	lines := strings.Split(content, "\n")
+	numLines := len(lines) - 1
+
+	if numLines != 15 {
+		t.Errorf("Number of lines = %d, Expected 15", numLines)
+	}
+
+	linesConcatinated := strings.Join(lines, "")
+	if strings.Contains(linesConcatinated, "HTTP") {
+		t.Errorf("HTTP not expected, however got it")
+	}
+
+	// removing test file
+	removeTestFile()
+}
+
+func TestHeadWithRegexFiler(t *testing.T) {
+
+	// setting up test file
+	createTestFile()
+
+	content, err := ReadFromHead("./test-file.txt", "HTTP|ACLs", "", 100, nil)
+	if err != nil {
+		t.Errorf(err.Error())
+	}
+
+	lines := strings.Split(content, "\n")
+	numLines := len(lines) - 1
+
+	if numLines != 3 {
+		t.Errorf("Number of lines = %d, Expected 3", numLines)
+	}
+
+	linesConcatinated := strings.Join(lines, "")
+	t.Logf(linesConcatinated)
+	if !(strings.Contains(linesConcatinated, "HTTP") && strings.Contains(linesConcatinated, "ACLs")) {
+		t.Errorf("HTTP and ACLs expected, however not found")
+	}
+
+	// removing test file
+	removeTestFile()
+}
