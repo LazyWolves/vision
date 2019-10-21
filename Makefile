@@ -3,6 +3,7 @@ GODOC=godoc
 GOBUILD=$(GOCMD) build
 GORUN=$(GOCMD) run
 GOCLEAN=$(GOCMD) clean
+GOTEST=$(GOCMD) test
 BINARY_NAME=vision
 DIST_DIR=dist
 SRC=main/vision.go
@@ -32,6 +33,9 @@ install:
 		@cp $(CONF_DIR)/config.json $(DESTDIR)/etc/vision/config.json
 		@cp $(CONF_DIR)/vision.service $(DESTDIR)/etc/systemd/system/vision.service
 		@echo "installed vision"
+
+test:
+		$(GOTEST) ./...
 
 uninstall:
 		@rm -f $(DESTDIR)$(prefix)/bin/$(BINARY_NAME)
