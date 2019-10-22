@@ -14,6 +14,7 @@ all: build
 
 build:	clean
 		@echo "building vision..."
+		$(GOCMD) get ./main/
 		@mkdir $(DIST_DIR)
 		$(GOBUILD) -o $(DIST_DIR)/$(BINARY_NAME) $(SRC)
 		@echo "build successful"
