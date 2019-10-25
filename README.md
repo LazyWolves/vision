@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/djmgit/vision.svg?branch=dev)](https://travis-ci.org/djmgit/vision)
+
 ## Vision
 
 Vision is a light weight tool written purely in golang for viewing remote resources over HTTP. Vision allows you to view
