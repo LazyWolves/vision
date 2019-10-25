@@ -1,0 +1,10 @@
+language: go
+go:
+  - 1.12.4
+
+script:
+  cp -r $GOPATH/src/github.com/djmgit/vision $GOPATH/src &&
+  cd $GOPATH/src/vision &&
+  make &&
+  make test &&
+  pwd
