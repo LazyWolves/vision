@@ -32,7 +32,7 @@ func TestUtilPosRegex(t *testing.T) {
 func TestUtilNegRegex(t *testing.T) {
 
 	// Creating test string
-	testString := "This is a test string for positive regex match. Testing-123"
+	testString := "This is a test string for negative regex match. Testing-123"
 	passed := CheckPattern(testString, "", "regex")
 
 	if passed {
@@ -49,5 +49,28 @@ func TestUtilNegRegex(t *testing.T) {
 
 	if !passed {
 		t.Errorf("Expected true, however got false")
+	}
+}
+
+func TestUtilPosNegRegex(t *testing.T) {
+
+	// creating test string
+	testString := "This string will test positive regex and negative regex combined"
+	passed := CheckPattern(testString, "positive", "negative")
+
+	if passed {
+		t.Errorf("Expected false, however got true")
+	}
+
+	passed = CheckPattern(testString, "positive", "absent")
+
+	if !passed {
+		t.Errorf("Expected true, however got fasle")
+	}
+
+	passed = CheckPattern(testString, "present", "absent")
+
+	if passed {
+		t.Errorf("Expected false, however got true")
 	}
 }
