@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/djmgit/vision.svg?branch=dev)](https://travis-ci.org/djmgit/vision)
+[![Build Status](https://travis-ci.org/LazyWolves/vision.svg?branch=dev)](https://travis-ci.org/LazyWolves/vision)
 
 ## Vision
 
