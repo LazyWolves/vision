@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/LazyWolves/vision.svg?branch=master)](https://travis-ci.org/LazyWolves/vision)
+
 ## Vision
 
 Vision is a light weight tool written purely in golang for viewing remote resources over HTTP. Vision allows you to view
