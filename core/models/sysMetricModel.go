@@ -1,26 +1,27 @@
 package models
 
-type SystemMetricQueryHolder struct {
+type SystemMetrics struct {
 
-	// type of system metric wanted :  can be cpu, memory as of now
-	metricType string
+	// type of system metric wanted : can be cpu, memory as of now
+	Load CPULoadAvgMetrics
+	Memory MemoryMetrics
 }
 
-type CPUMetric struct {
-	loadAvg CPULoadAvgMetric	
+type CPUMetrics struct {
+	LoadAvg CPULoadAvgMetrics
 }
 
-type CPULoadAvgMetric struct {
+type CPULoadAvgMetrics struct {
 	Load1 float64
 	Load5 float64
 	Load15 float64
 }
 
-type MemoryMetric struct {
-	VirtualMemory VirtualMemoryMetric
+type MemoryMetrics struct {
+	VirtualMemory VirtualMemoryMetrics
 }
 
-type VirtualMemoryMetric struct {
+type VirtualMemoryMetrics struct {
 	MemTotal float64
 	MemFree float64
 	UsedPercent float64
