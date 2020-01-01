@@ -1,7 +1,7 @@
 package sysMetrichandler
 
 import (
-	"fmt"
+	//"fmt"
 	"github.com/shirou/gopsutil/load"
 	"github.com/shirou/gopsutil/mem"
 	"vision/core/models"
@@ -39,7 +39,7 @@ func getMemoryMetrics(MemoryMetrics *models.MemoryMetrics) {
 	}
 }
 
-func getSystemMetrics() *models.SystemMetrics{
+func GetSystemMetrics() *models.SystemMetrics{
 
 	cpuMetrics := models.CPUMetrics{}
 	memoryMetrics := models.MemoryMetrics{}
