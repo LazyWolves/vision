@@ -8,9 +8,11 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 	"strconv"
 	"strings"
 	"vision/core/fileDriver"
+	"vision/core/sysMetricDriver"
 	"vision/core/models"
 	"vision/core/util"
 	"vision/core/apiDoc"
@@ -69,6 +71,7 @@ func Api() {
 	// Create route for /aliases path and add handler function to it
 	http.HandleFunc("/aliases", aliasHandler)
 	http.HandleFunc("/apiDoc", apiDocHandler)
+	http.HandleFunc("/systemMetrics", sysMetricApihandler)
 	log.Fatal(http.ListenAndServe(":"+strconv.FormatInt(configJson.Port, 10), nil))
 }
 
@@ -119,6 +122,21 @@ func allAliases() string {
 	}
 
 	return ""
+}
+
+func sysMetricApihandler(w http.ResponseWriter, r *http.Request) {
+
+	sysMetrics := sysMetricDriver.GetSystemMetrics()
+	w.Header().Set("Content-Type", "application/json")
+
+	systemMetricResponse := models.SystemMetricsResponse{}
+	systemMetricResponse.Metrics = *sysMetrics
+	systemMetricResponse.Timestamp = time.Now().UTC().Unix()
+	systemMetricResponse.TimestampUTC = time.Now().UTC().String()
+
+	metricsJson, _ := json.Marshal(systemMetricResponse)
+
+	w.Write(metricsJson)
 }
 
 // This is the handler for root. It takes in a number of URL query params
