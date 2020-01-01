@@ -38,3 +38,19 @@ func getMemoryMetrics(MemoryMetrics *models.MemoryMetrics) {
 		MemoryMetrics.VirtualMemory = VirtualMemoryMetrics
 	}
 }
+
+func getSystemMetrics() *models.SystemMetrics{
+
+	cpuMetrics := models.CPUMetrics{}
+	memoryMetrics := models.MemoryMetrics{}
+
+	getCPUMetrics(&cpuMetrics)
+	getMemoryMetrics(&memoryMetrics)
+
+	SystemMetrics := models.SystemMetrics{
+		CPU: cpuMetrics,
+		Memory: memoryMetrics,
+	}
+
+	return &SystemMetrics
+}

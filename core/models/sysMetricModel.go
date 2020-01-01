@@ -3,7 +3,7 @@ package models
 type SystemMetrics struct {
 
 	// type of system metric wanted : can be cpu, memory as of now
-	Load CPULoadAvgMetrics
+	CPU CPUMetrics
 	Memory MemoryMetrics
 }
 
