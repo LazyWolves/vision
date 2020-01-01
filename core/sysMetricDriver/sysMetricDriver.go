@@ -5,7 +5,7 @@ import (
 	"vision/core/sysMetrichandler"
 )
 
-func getSystemMetrics() *models.SystemMetrics {
+func GetSystemMetrics() *models.SystemMetrics {
 
 	return sysMetrichandler.GetSystemMetrics()
 }

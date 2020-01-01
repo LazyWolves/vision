@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"strings"
 	"vision/core/fileDriver"
+	"vision/core/sysMetricDriver"
 	"vision/core/models"
 	"vision/core/util"
 	"vision/core/apiDoc"
@@ -119,6 +120,20 @@ func allAliases() string {
 	}
 
 	return ""
+}
+
+func sysMetricApihandler(w http.ResponseWriter, r *http.Request) {
+
+	sysMetrics := sysMetricDriver.GetSystemMetrics()
+	w.Header().Set("Content-Type", "application/json")
+
+	metricsJson, err := json.Marshal(sysMetrics)
+
+	if err != nil {
+		fmt.Fprintf(w, err.Error())
+	}
+
+	w.Write(metricsJson)
 }
 
 // This is the handler for root. It takes in a number of URL query params
