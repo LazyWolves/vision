@@ -22,7 +22,7 @@ type MemoryMetrics struct {
 }
 
 type VirtualMemoryMetrics struct {
-	MemTotal float64
-	MemFree float64
+	MemTotal uint64
+	MemFree uint64
 	UsedPercent float64
 }

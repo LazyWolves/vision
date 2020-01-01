@@ -7,7 +7,7 @@ import (
 	"vision/core/models"
 )
 
-func getCPUMetrics(CPUMetrics *models.CPUMetrics) error {
+func getCPUMetrics(CPUMetrics *models.CPUMetrics) {
 
 	cpuLoad, error := load.Avg()
 
@@ -20,9 +20,21 @@ func getCPUMetrics(CPUMetrics *models.CPUMetrics) error {
 		}
 
 		CPUMetrics.LoadAvg = CPULoadAvgMetrics
-
-		return nil
 	}
+}
 
-	return error
+func getMemoryMetrics(MemoryMetrics *models.MemoryMetrics) {
+
+	virtualMemory, error := mem.VirtualMemory()
+
+	if error != nil {
+
+		VirtualMemoryMetrics := models.VirtualMemoryMetrics{
+			MemTotal: virtualMemory.Total,
+			MemFree: virtualMemory.Free,
+			UsedPercent: virtualMemory.UsedPercent,
+		}
+
+		MemoryMetrics.VirtualMemory = VirtualMemoryMetrics
+	}
 }
