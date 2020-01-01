@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 	"strconv"
 	"strings"
 	"vision/core/fileDriver"
@@ -128,11 +129,12 @@ func sysMetricApihandler(w http.ResponseWriter, r *http.Request) {
 	sysMetrics := sysMetricDriver.GetSystemMetrics()
 	w.Header().Set("Content-Type", "application/json")
 
-	metricsJson, err := json.Marshal(sysMetrics)
+	systemMetricResponse := models.SystemMetricsResponse{}
+	systemMetricResponse.Metrics = *sysMetrics
+	systemMetricResponse.Timestamp = time.Now().UTC().Unix()
+	systemMetricResponse.TimestampUTC = time.Now().UTC().String()
 
-	if err != nil {
-		fmt.Fprintf(w, err.Error())
-	}
+	metricsJson, _ := json.Marshal(systemMetricResponse)
 
 	w.Write(metricsJson)
 }

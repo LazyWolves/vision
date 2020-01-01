@@ -26,3 +26,9 @@ type VirtualMemoryMetrics struct {
 	MemFree uint64
 	UsedPercent float64
 }
+
+type SystemMetricsResponse struct {
+	Metrics SystemMetrics
+	Timestamp int64
+	TimestampUTC string
+}
