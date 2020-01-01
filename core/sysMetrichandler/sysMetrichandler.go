@@ -1,7 +1,6 @@
 package sysMetrichandler
 
 import (
-	//"fmt"
 	"github.com/shirou/gopsutil/load"
 	"github.com/shirou/gopsutil/mem"
 	"vision/core/models"
@@ -11,7 +10,7 @@ func getCPUMetrics(CPUMetrics *models.CPUMetrics) {
 
 	cpuLoad, error := load.Avg()
 
-	if error != nil {
+	if error == nil {
 
 		CPULoadAvgMetrics := models.CPULoadAvgMetrics{
 			Load1: cpuLoad.Load1,
@@ -27,7 +26,7 @@ func getMemoryMetrics(MemoryMetrics *models.MemoryMetrics) {
 
 	virtualMemory, error := mem.VirtualMemory()
 
-	if error != nil {
+	if error == nil {
 
 		VirtualMemoryMetrics := models.VirtualMemoryMetrics{
 			MemTotal: virtualMemory.Total,

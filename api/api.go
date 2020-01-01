@@ -70,6 +70,7 @@ func Api() {
 	// Create route for /aliases path and add handler function to it
 	http.HandleFunc("/aliases", aliasHandler)
 	http.HandleFunc("/apiDoc", apiDocHandler)
+	http.HandleFunc("/systemMetrics", sysMetricApihandler)
 	log.Fatal(http.ListenAndServe(":"+strconv.FormatInt(configJson.Port, 10), nil))
 }
 
