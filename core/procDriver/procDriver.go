@@ -5,7 +5,7 @@ import (
 	"vision/core/procHandler"
 )
 
-func getListOfProcesses(filterBy, regex string) (*[]models.ProcDescriptionShort, error) {
+func GetListOfProcesses(filterBy, regex string) (*[]models.ProcDescriptionShort, error) {
 
 	procList, err := procHandler.ListAllProcs()
 
@@ -29,4 +29,15 @@ func getListOfProcesses(filterBy, regex string) (*[]models.ProcDescriptionShort,
 	}
 
 	return &procListFilter, nil
+}
+
+func GetProcessDetails(pid int32) (*models.ProcDescriptionLong, error) {
+
+	process, err := procHandler.DescribeProc(pid)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return process, nil
 }
