@@ -20,8 +20,8 @@ type ProcDescriptionLong struct {
 	Status string
 	Uids []int32
 	Gids []int32
-	Nice []int32
-	NumThreads []int32
+	Nice int32
+	NumThreads int32
 }
 
 func (p *ProcDescriptionShort) Filter(filterBy, regex string) (bool, error) {
