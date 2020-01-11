@@ -5,7 +5,7 @@ import (
 	"vision/core/models"
 )
 
-func listAllProcs() (*[]models.ProcDescriptionShort, error) {
+func ListAllProcs() (*[]models.ProcDescriptionShort, error) {
 
 	procList := make([]models.ProcDescriptionShort, 1) 
 	processes, _ := process.Processes()
@@ -27,7 +27,7 @@ func listAllProcs() (*[]models.ProcDescriptionShort, error) {
 	return &procList, nil
 }
 
-func describeProc(pid int32) (*models.ProcDescriptionLong, error) {
+func DescribeProc(pid int32) (*models.ProcDescriptionLong, error) {
 
 	proc, err := process.NewProcess(pid)
 
@@ -61,5 +61,4 @@ func describeProc(pid int32) (*models.ProcDescriptionLong, error) {
 	}
 
 	return procDescription, nil
-
 }
