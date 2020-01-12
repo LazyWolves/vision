@@ -73,6 +73,7 @@ func Api() {
 	http.HandleFunc("/aliases", aliasHandler)
 	http.HandleFunc("/apiDoc", apiDocHandler)
 	http.HandleFunc("/systemMetrics", sysMetricApihandler)
+	http.HandleFunc("/procs", procApiHandler)
 	log.Fatal(http.ListenAndServe(":"+strconv.FormatInt(configJson.Port, 10), nil))
 }
 
