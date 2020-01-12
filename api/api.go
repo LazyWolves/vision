@@ -13,6 +13,7 @@ import (
 	"strings"
 	"vision/core/fileDriver"
 	"vision/core/sysMetricDriver"
+	"vision/core/procDriver"
 	"vision/core/models"
 	"vision/core/util"
 	"vision/core/apiDoc"
@@ -137,6 +138,50 @@ func sysMetricApihandler(w http.ResponseWriter, r *http.Request) {
 	metricsJson, _ := json.Marshal(systemMetricResponse)
 
 	w.Write(metricsJson)
+}
+
+func procApiHandler(w http.ResponseWriter, r *http.Request) {
+
+	procPidSlice, isProcPidSlice := r.URL.Query()["pid"]
+	regexSlice, isRegexSlice := r.URL.Query()["regex"]
+	filterBySlice, isFilterBySlice := r.URL.Query()["filterBy"]
+
+	if !isProcPidSlice {
+		procListResponse := models.ProcListResponse{}
+
+		filterBy, regex := "", ""
+		if !isRegexSlice {
+			regex = regexSlice[0]
+		}
+
+		if !isFilterBySlice {
+			filterBy = filterBySlice[0]
+		}
+
+		procs, _ := procDriver.GetListOfProcesses(filterBy, regex)
+		procListResponse.ProcList = *procs
+		procListResponse.Timestamp = time.Now().UTC().Unix()
+		procListResponse.TimestampUTC = time.Now().UTC().String()
+
+		procsJson, _ := json.Marshal(procListResponse)
+
+		w.Write(procsJson)
+
+		return
+	}
+
+	pidstr := procPidSlice[0]
+	pid, _ := strconv.Atoi(pidstr)
+	proc, _ := procDriver.GetProcessDetails(int32(pid))
+
+	procDescriptionResponse := models.ProcDescriptionResponse{}
+	procDescriptionResponse.ProcDesc = *proc
+	procDescriptionResponse.Timestamp = time.Now().UTC().Unix()
+	procDescriptionResponse.TimestampUTC = time.Now().UTC().String()
+
+	procJson, _ := json.Marshal(procDescriptionResponse)
+
+	w.Write(procJson)
 }
 
 // This is the handler for root. It takes in a number of URL query params

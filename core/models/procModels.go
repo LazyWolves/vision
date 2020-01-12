@@ -39,7 +39,7 @@ func (p *ProcDescriptionShort) Filter(filterBy, regex string) (bool, error) {
 }
 
 type ProcListResponse struct {
-	ProcsList []ProcDescriptionShort
+	ProcList []ProcDescriptionShort
 	Timestamp int64
 	TimestampUTC string
 }
