@@ -147,15 +147,17 @@ func procApiHandler(w http.ResponseWriter, r *http.Request) {
 	regexSlice, isRegexSlice := r.URL.Query()["regex"]
 	filterBySlice, isFilterBySlice := r.URL.Query()["filterBy"]
 
+	w.Header().Set("Content-Type", "application/json")
+
 	if !isProcPidSlice {
 		procListResponse := models.ProcListResponse{}
 
 		filterBy, regex := "", ""
-		if !isRegexSlice {
+		if isRegexSlice {
 			regex = regexSlice[0]
 		}
 
-		if !isFilterBySlice {
+		if isFilterBySlice {
 			filterBy = filterBySlice[0]
 		}
 
