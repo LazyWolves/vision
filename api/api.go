@@ -14,6 +14,7 @@ import (
 	"vision/core/fileDriver"
 	"vision/core/sysMetricDriver"
 	"vision/core/procDriver"
+	"vision/core/hostInfoDriver"
 	"vision/core/models"
 	"vision/core/util"
 	"vision/core/apiDoc"
@@ -124,6 +125,12 @@ func allAliases() string {
 	}
 
 	return ""
+}
+
+func hostInfoApiHandler(w http.ResponseWriter, r *http.Request) {
+
+	hostInfo, _ := hostInfoDriver.HostInfo()
+	w.Header().Set("Content-Type", "application/json")
 }
 
 func sysMetricApihandler(w http.ResponseWriter, r *http.Request) {
