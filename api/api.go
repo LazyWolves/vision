@@ -131,6 +131,11 @@ func hostInfoApiHandler(w http.ResponseWriter, r *http.Request) {
 
 	hostInfo, _ := hostInfoDriver.HostInfo()
 	w.Header().Set("Content-Type", "application/json")
+
+	hostInfoResponse := models.HostInfo{}
+	hostInfoResponse.HostInfo = *hostInfo
+	hostInfoResponse.Timestamp = time.Now().UTC().Unix()
+	hostInfoResponse.TimestampUTC = time.Now().UTC().String()
 }
 
 func sysMetricApihandler(w http.ResponseWriter, r *http.Request) {
