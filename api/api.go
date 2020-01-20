@@ -75,6 +75,7 @@ func Api() {
 	http.HandleFunc("/apiDoc", apiDocHandler)
 	http.HandleFunc("/systemMetrics", sysMetricApihandler)
 	http.HandleFunc("/procs", procApiHandler)
+	http.HandleFunc("/hostInfo", hostInfoApiHandler)
 	log.Fatal(http.ListenAndServe(":"+strconv.FormatInt(configJson.Port, 10), nil))
 }
 
@@ -136,6 +137,10 @@ func hostInfoApiHandler(w http.ResponseWriter, r *http.Request) {
 	hostInfoResponse.HostInfo = *hostInfo
 	hostInfoResponse.Timestamp = time.Now().UTC().Unix()
 	hostInfoResponse.TimestampUTC = time.Now().UTC().String()
+
+	hostInfoJson, _ := json.Marshal(hostInfoResponse)
+
+	w.Write(hostInfoJson)
 }
 
 func sysMetricApihandler(w http.ResponseWriter, r *http.Request) {
