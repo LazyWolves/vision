@@ -14,6 +14,7 @@ import (
 	"vision/core/fileDriver"
 	"vision/core/sysMetricDriver"
 	"vision/core/procDriver"
+	"vision/core/hostInfoDriver"
 	"vision/core/models"
 	"vision/core/util"
 	"vision/core/apiDoc"
@@ -74,6 +75,7 @@ func Api() {
 	http.HandleFunc("/apiDoc", apiDocHandler)
 	http.HandleFunc("/systemMetrics", sysMetricApihandler)
 	http.HandleFunc("/procs", procApiHandler)
+	http.HandleFunc("/hostInfo", hostInfoApiHandler)
 	log.Fatal(http.ListenAndServe(":"+strconv.FormatInt(configJson.Port, 10), nil))
 }
 
@@ -124,6 +126,21 @@ func allAliases() string {
 	}
 
 	return ""
+}
+
+func hostInfoApiHandler(w http.ResponseWriter, r *http.Request) {
+
+	hostInfo, _ := hostInfoDriver.HostInfo()
+	w.Header().Set("Content-Type", "application/json")
+
+	hostInfoResponse := models.HostInfo{}
+	hostInfoResponse.HostInfo = *hostInfo
+	hostInfoResponse.Timestamp = time.Now().UTC().Unix()
+	hostInfoResponse.TimestampUTC = time.Now().UTC().String()
+
+	hostInfoJson, _ := json.Marshal(hostInfoResponse)
+
+	w.Write(hostInfoJson)
 }
 
 func sysMetricApihandler(w http.ResponseWriter, r *http.Request) {
