@@ -15,6 +15,7 @@ import (
 	"vision/core/sysMetricDriver"
 	"vision/core/procDriver"
 	"vision/core/hostInfoDriver"
+	"vision/core/systemdDriver"
 	"vision/core/models"
 	"vision/core/util"
 	"vision/core/apiDoc"
@@ -76,6 +77,7 @@ func Api() {
 	http.HandleFunc("/systemMetrics", sysMetricApihandler)
 	http.HandleFunc("/procs", procApiHandler)
 	http.HandleFunc("/hostInfo", hostInfoApiHandler)
+	http.HandleFunc("/systemd", listSystemdServicesHandler)
 	log.Fatal(http.ListenAndServe(":"+strconv.FormatInt(configJson.Port, 10), nil))
 }
 
@@ -126,6 +128,31 @@ func allAliases() string {
 	}
 
 	return ""
+}
+
+func listSystemdServicesHandler(w http.ResponseWriter, r *http.Request) {
+
+	filterBySlice, isFilterBySlice := r.URL.Query()["filterBy"]
+	w.Header().Set("Content-Type", "application/json")
+
+	filterBy := []string{}
+	if !isFilterBySlice {
+		filterBy = []string{"*"}
+	} else {
+		filterBy = strings.Split(filterBySlice[0], ",")
+	}
+
+	ListSystemdServices, _ := systemdDriver.ListSystemdServices(filterBy)
+
+	listSystemdServicesResponse := models.SystemdResponseHolder{}
+	listSystemdServicesResponse.Services = *ListSystemdServices
+	listSystemdServicesResponse.NumServices = len(*ListSystemdServices)
+	listSystemdServicesResponse.Timestamp = time.Now().UTC().Unix()
+	listSystemdServicesResponse.TimestampUTC = time.Now().UTC().String()
+
+	listSystemdServicesJson, _ := json.Marshal(listSystemdServicesResponse)
+
+	w.Write(listSystemdServicesJson)
 }
 
 func hostInfoApiHandler(w http.ResponseWriter, r *http.Request) {
