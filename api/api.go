@@ -139,6 +139,18 @@ func listSystemdServicesHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		filterBy = strings.Split(filterBySlice[0], ",")
 	}
+
+	ListSystemdServices, _ := systemdDriver.ListSystemdServices(filterBy)
+
+	listSystemdServicesResponse := models.SystemdResponseHolder{}
+	listSystemdServicesResponse.Services = *ListSystemdServices
+	listSystemdServicesResponse.NumServices = len(*ListSystemdServices)
+	listSystemdServicesResponse.Timestamp = time.Now().UTC().Unix()
+	listSystemdServicesResponse.TimestampUTC = time.Now().UTC().String()
+
+	listSystemdServicesJson, _ := json.Marshal(listSystemdServicesResponse)
+
+	w.Write(listSystemdServicesJson)
 }
 
 func hostInfoApiHandler(w http.ResponseWriter, r *http.Request) {
