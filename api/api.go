@@ -15,6 +15,7 @@ import (
 	"vision/core/sysMetricDriver"
 	"vision/core/procDriver"
 	"vision/core/hostInfoDriver"
+	"vision/core/systemdDriver"
 	"vision/core/models"
 	"vision/core/util"
 	"vision/core/apiDoc"
@@ -126,6 +127,18 @@ func allAliases() string {
 	}
 
 	return ""
+}
+
+func listSystemdServicesHandler(w http.ResponseWriter, r *http.Request) {
+
+	filterBySlice, isFilterBySlice := r.URL.Query()["filterBy"]
+
+	filterBy := []string{}
+	if !isFilterBySlice {
+		filterBy = []string{"*"}
+	} else {
+		filterBy = strings.Split(filterBySlice[0], ",")
+	}
 }
 
 func hostInfoApiHandler(w http.ResponseWriter, r *http.Request) {
