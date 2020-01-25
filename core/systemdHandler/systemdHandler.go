@@ -1,24 +1,24 @@
-package systemHandler
+package systemdHandler
 
 import (
 	"vision/core/models"
 	"github.com/coreos/go-systemd/dbus"
 )
 
-func ListSystemdServices(filterBy []string) ([]models.SystemdHolder, error) {
+func ListSystemdServices(filterBy []string) (*[]models.SystemdHolder, error) {
 
 	listSystemdServices := []models.SystemdHolder{}
 
 	sbusConn, err := dbus.New()
 	
 	if err != nil {
-		return listSystemdServices, err
+		return &listSystemdServices, err
 	}
 
 	units, err := sbusConn.ListUnitsByPatterns([]string{}, filterBy)
 
 	if err != nil {
-		return listSystemdServices, err
+		return &listSystemdServices, err
 	}
 
 	for _, unit := range units {
@@ -28,5 +28,5 @@ func ListSystemdServices(filterBy []string) ([]models.SystemdHolder, error) {
 		})
 	}
 
-	return listSystemdServices, nil
+	return &listSystemdServices, nil
 }
