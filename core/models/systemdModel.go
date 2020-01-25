@@ -1,6 +1,6 @@
 package models
 
 type SystemdHolder struct {
-	ServceName string
+	ServiceName string
 	ServiceState string
 }

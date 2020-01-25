@@ -20,4 +20,13 @@ func ListSystemdServices(filterBy []string) ([]models.SystemdHolder, error) {
 	if err != nil {
 		return listSystemdServices, err
 	}
+
+	for _, unit := range units {
+		listSystemdServices = append(listSystemdServices, models.SystemdHolder{
+			ServiceName: unit.Name,
+			ServiceState: unit.ActiveState,
+		})
+	}
+
+	return listSystemdServices, nil
 }
