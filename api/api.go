@@ -77,6 +77,7 @@ func Api() {
 	http.HandleFunc("/systemMetrics", sysMetricApihandler)
 	http.HandleFunc("/procs", procApiHandler)
 	http.HandleFunc("/hostInfo", hostInfoApiHandler)
+	http.HandleFunc("/systemd", listSystemdServicesHandler)
 	log.Fatal(http.ListenAndServe(":"+strconv.FormatInt(configJson.Port, 10), nil))
 }
 
@@ -132,6 +133,7 @@ func allAliases() string {
 func listSystemdServicesHandler(w http.ResponseWriter, r *http.Request) {
 
 	filterBySlice, isFilterBySlice := r.URL.Query()["filterBy"]
+	w.Header().Set("Content-Type", "application/json")
 
 	filterBy := []string{}
 	if !isFilterBySlice {
