@@ -77,7 +77,7 @@ func Api() {
 	http.HandleFunc("/systemMetrics", sysMetricApihandler)
 	http.HandleFunc("/procs", procApiHandler)
 	http.HandleFunc("/hostInfo", hostInfoApiHandler)
-	http.HandleFunc("/systemd", listSystemdServicesHandler)
+	http.HandleFunc("/systemd", systemdHandler)
 	log.Fatal(http.ListenAndServe(":"+strconv.FormatInt(configJson.Port, 10), nil))
 }
 
@@ -130,11 +130,9 @@ func allAliases() string {
 	return ""
 }
 
-func listSystemdServicesHandler(w http.ResponseWriter, r *http.Request) {
+func systemdListHandler(w http.ResponseWriter, r *http.Request) {
 
 	filterBySlice, isFilterBySlice := r.URL.Query()["filterBy"]
-	w.Header().Set("Content-Type", "application/json")
-
 	filterBy := []string{}
 	if !isFilterBySlice {
 		filterBy = []string{"*"}
@@ -142,17 +140,71 @@ func listSystemdServicesHandler(w http.ResponseWriter, r *http.Request) {
 		filterBy = strings.Split(filterBySlice[0], ",")
 	}
 
-	ListSystemdServices, _ := systemdDriver.ListSystemdServices(filterBy)
+	listSystemdServices, _ := systemdDriver.ListSystemdServices(filterBy)
 
-	listSystemdServicesResponse := models.SystemdResponseHolder{}
-	listSystemdServicesResponse.Services = *ListSystemdServices
-	listSystemdServicesResponse.NumServices = len(*ListSystemdServices)
+	listSystemdServicesResponse := models.ListSystemdResponseHolder{}
+	listSystemdServicesResponse.Services = *listSystemdServices
+	listSystemdServicesResponse.NumServices = len(*listSystemdServices)
 	listSystemdServicesResponse.Timestamp = time.Now().UTC().Unix()
 	listSystemdServicesResponse.TimestampUTC = time.Now().UTC().String()
 
 	listSystemdServicesJson, _ := json.Marshal(listSystemdServicesResponse)
 
 	w.Write(listSystemdServicesJson)
+}
+
+
+
+func systemdServicesHandler(w http.ResponseWriter, r *http.Request) {
+
+	serviceNameSlice, isServiceNameSlice := r.URL.Query()["serviceName"]
+	operationSlice, isOperationSlice := r.URL.Query()["operation"]
+
+	operation, serviceName := "", ""
+
+	if isServiceNameSlice {
+		serviceName = serviceNameSlice[0]
+	}
+
+	if isOperationSlice {
+		operation = operationSlice[0]
+	}
+
+	operateSystemdServiceResponse := models.OperateSytemdResponseHolder{}
+
+	status := ""
+
+	if operation == "start" {
+		status, err := systemdDriver.StartSystemdService(serviceName)
+	} else if operation == "stop" {
+		status, err := systemdDriver.StopSystemdService(serviceName)
+	}
+
+	operateSystemdServiceResponse.Status = status
+	operateSystemdServiceResponse.Timestamp = time.Now().UTC().Unix()
+	operateSystemdServiceResponse.TimestampUTC = time.Now().UTC().String()
+
+	operateSystemdJson, _ := json.Marshal(operateSystemdServiceResponse)
+
+	w.Write(operateSystemdJson)
+}
+
+func systemdHandler(w http.ResponseWriter, r *http.Request) {
+
+	w.Header().Set("Content-Type", "application/json")
+
+	operationSlice, isOperationSlice := r.URL.Query()["operation"]
+	operation := ""
+
+	if isOperationSlice {
+		operation = operationSlice[0]
+	}
+
+	if operation == "list" {
+		systemdListHandler(w, r)
+	} else if operation == "start" || operation == "stop" {
+		systemdServicesHandler(w, r)
+	}
 }
 
 func hostInfoApiHandler(w http.ResponseWriter, r *http.Request) {

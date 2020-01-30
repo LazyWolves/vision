@@ -5,9 +5,15 @@ type SystemdHolder struct {
 	ServiceState string
 }
 
-type SystemdResponseHolder struct {
+type ListSystemdResponseHolder struct {
 	Services []SystemdHolder
 	NumServices int
+	Timestamp int64
+	TimestampUTC string
+}
+
+type OperateSytemdResponseHolder struct {
+	Status string
 	Timestamp int64
 	TimestampUTC string
 }
