@@ -175,9 +175,9 @@ func systemdServicesHandler(w http.ResponseWriter, r *http.Request) {
 	status := ""
 
 	if operation == "start" {
-		status, err := systemdDriver.StartSystemdService(serviceName)
+		status, _ = systemdDriver.StartSystemdService(serviceName)
 	} else if operation == "stop" {
-		status, err := systemdDriver.StopSystemdService(serviceName)
+		status, _ = systemdDriver.StopSystemdService(serviceName)
 	}
 
 	operateSystemdServiceResponse.Status = status
