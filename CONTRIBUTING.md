@@ -33,6 +33,8 @@ How are you planning to implement it, if you want to take it up.
 If you want to work on an Issue, please comment on that issue so that someone assigns you to that issue.
 Once you are assigned to that issue you can proceed with hacking vision and sent a Pull Request.
 
+All pull requests must be made against the **dev (default)** branch.
+
 Pull requests should comply the below mentioned template :
 
 ```
