@@ -7,6 +7,8 @@ config files, log files and other such files over HTTP via your browser or on yo
 which you can block view on certain resources and alow view on certain resources. It allows you to configure aliases
 so that you do not have to type the entire path of the resource on server, view a file from top, or bottom, apply regex
 for filtering contents and specify number of lines to be read form desired files.
+Apart from viewing file resources it also allows you to view information about your remote host, processes running and their state and information on them, system metrcis like CPU and Memory, status of your systemd services running and option to
+start and stop them.
 
 ## Features and use cases
 - Viewing resources (log files, config files) on remote servers over http.
