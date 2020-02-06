@@ -397,6 +397,84 @@ The Base path is [server_ip]:[port]/systemd
 |   filterBy      |      string      |   Excepts a regex, will list systemd services whose name matches the given regex, should be used with operation=list |
 |   serviceName   |      string      |   Excepts a service name, used to specify service to be started or stopped, should be used with operation=start|stop |
 
+Example :
+
+```
+The following API call can be used to list all systemd services running:
+
+http://[server_ip]:[port]/systemd?operation=lisy&filterBy=*.service
+
+Response: 
+
+{
+  "Services": [
+    {
+      "ServiceName": "festival.service",
+      "ServiceState": "inactive"
+    },
+    {
+      "ServiceName": "user@1000.service",
+      "ServiceState": "active"
+    },
+    {
+      "ServiceName": "openvpn.service",
+      "ServiceState": "active"
+    },
+    {
+      "ServiceName": "ModemManager.service",
+      "ServiceState": "active"
+    },
+    {
+      "ServiceName": "sssd.service",
+      "ServiceState": "inactive"
+    },
+    {
+      "ServiceName": "unattended-upgrades.service",
+      "ServiceState": "inactive"
+    },
+    {
+      "ServiceName": "systemd-fsck-root.service",
+      "ServiceState": "inactive"
+    },
+    {
+      "ServiceName": "kerneloops.service",
+      "ServiceState": "active"
+    },
+    {
+      "ServiceName": "console-setup.service",
+      "ServiceState": "active"
+    }
+  ],
+  "NumServices": 131,
+  "Timestamp": 1580974430,
+  "TimestampUTC": "2020-02-06 07:33:50.024080951 +0000 UTC"
+}
+
+The following API call can be used to stop haproxy, (if haproxy in running in the system, just an example)
+
+API call : http://[server_ip]:[port]/systemd?operation=start&serviceName=haproxy
+
+Response:
+
+{
+  "Status": "OK",
+  "Timestamp": 1580974652,
+  "TimestampUTC": "2020-02-06 07:37:32.048756127 +0000 UTC"
+}
+
+Similarly the following can be used to start it back
+
+API call : http://[server_ip]:[port]/systemd?operation=stop&serviceName=haproxy
+
+Response:
+
+{
+  "Status": "OK",
+  "Timestamp": 1580974704,
+  "TimestampUTC": "2020-02-06 07:38:24.708853208 +0000 UTC"
+}
+
+```
 
 ## Contributing to Vision
 
