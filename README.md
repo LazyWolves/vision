@@ -202,6 +202,10 @@ It is to be noted that allow_for is used when allow_all is set to **false** and 
 
 ## Usage and API endpoints
 
+The following section describes how to use Vision endpoints in order to use its various features.
+
+### Viewing remote resource files
+
 The Base path is simply [server_ip]:[port]/
 
 All the options are simply passed as URL params. Only GET method is required.
@@ -242,6 +246,41 @@ The following will read the first 20 lines of the file aliases by 'nginx'
 http://[server-ip]:[port]?alias=nginx&readFrom=head&limit=100&ignore=WARNING
 
 ```
+
+### Viewing remote host information
+
+The Base path is simply [server_ip]:[port]/hostInfo
+
+Example:
+
+```
+
+API call : http://[server-ip]:[port]:8080/hostInfo
+
+Response:
+
+{
+  "HostInfo": {
+    "hostname": "deep-ThinkPad-X280",
+    "uptime": 6747,
+    "bootTime": 1580965085,
+    "procs": 322,
+    "os": "linux",
+    "platform": "ubuntu",
+    "platformFamily": "debian",
+    "platformVersion": "18.04",
+    "kernelVersion": "4.15.0-76-generic",
+    "kernelArch": "x86_64",
+    "virtualizationSystem": "kvm",
+    "virtualizationRole": "host",
+    "hostid": "4bdc21cc-2895-11b2-a85c-9a4598d18182"
+  },
+  "Timestamp": 1580971832,
+  "TimestampUTC": "2020-02-06 06:50:32.614724886 +0000 UTC"
+}
+
+```
+
 
 ## Contributing to Vision
 
