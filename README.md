@@ -45,7 +45,11 @@ start and stop them.
 - For a queried process it shows ```Name```, ```command line arguments```, ```executable path```,
   ```current working directory```, ```Status```, ```Number of Threads```, ```GIDS and UIDS```, etc.
 
-###
+### Fetching systemd services information
+
+- Vision allows you to view the ```status``` of the various systemd services running in your remote system
+- It allows you to list all the systemd services running in your system, and also allows you to filter via name.
+- You can also ```start``` or ```stop``` a service via vision remotely over HTTP.
   
 ## Getting started
 
