@@ -88,8 +88,8 @@ make
 sudo make install
 
 ```
-The first command will build vision. Mostly there should not be any issue in this step as vision has no external dependencies.
-Vision uses only the inbuild go packages.
+The first command will build vision.
+
 The second make command installs the vision binary on your system.
 
 ### Building DOC locally
