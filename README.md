@@ -7,10 +7,14 @@ config files, log files and other such files over HTTP via your browser or on yo
 which you can block view on certain resources and alow view on certain resources. It allows you to configure aliases
 so that you do not have to type the entire path of the resource on server, view a file from top, or bottom, apply regex
 for filtering contents and specify number of lines to be read form desired files.
+
 Apart from viewing file resources it also allows you to view information about your remote host, processes running and their state and information on them, system metrcis like CPU and Memory, status of your systemd services running and option to
 start and stop them.
 
 ## Features and use cases
+
+### Viewing remote resource files
+
 - Viewing resources (log files, config files) on remote servers over http.
 
 - During debugging, when multiple files has to be viewed in different servers, vision can be used to view such files
@@ -22,6 +26,12 @@ start and stop them.
 - A sysad might not want all resources to be viewed. To address this, vision allows ACLs. You can define simple ACLs like
   allow_all, allow_for, block_for, via which you can allow certain files to be read or blocked from reading or you can block
   a directory altogether.
+  
+### Fetching remote Host information
+
+- Vision allows you to view basic informations about your remote hosts over HTTP
+- Host information includes ```hostname```, ```uptime```, ```bootTime```, ```Porcs```, ```OS```, ```Platform```, ```Arch```,
+  ```KernelVersion```, ```Virtualisation Type```, ```Virtualisation Role```, etc. 
   
 ## Getting started
 
