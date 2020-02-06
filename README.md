@@ -288,6 +288,8 @@ The Base path is [server_ip]:[port]/systemMetrics
 Example:
 
 ```
+API call : http://[serve_ip]:[port]/systemMetrics
+
 {
   "Metrics": {
     "CPU": {
@@ -324,6 +326,8 @@ All the options are passed as URL params. Only GET method is required.
 Example:
 
 ```
+API call : http://[server_ip]:[port]/procs
+
 {
   "ProcList": [
     {
@@ -351,7 +355,47 @@ Example:
   "TimestampUTC": "2020-02-06 07:03:33.870976948 +0000 UTC"
 }
 
+API call : http://[server_ip]:[port]/procs?pid=1234
+
+{
+  "ProcDesc": {
+    "Pid": 1234,
+    "Ppid": 1,
+    "Name": "mongod",
+    "CmdLine": "/usr/bin/mongod --config /etc/mongod.conf",
+    "ExePath": "/usr/bin/mongod",
+    "Cwd": "/",
+    "Status": "S",
+    "Uids": [
+      122,
+      122,
+      122,
+      122
+    ],
+    "Gids": [
+      127,
+      127,
+      127,
+      127
+    ],
+    "Nice": 20,
+    "NumThreads": 26
+  },
+  "Timestamp": 1580972908,
+  "TimestampUTC": "2020-02-06 07:08:28.947810077 +0000 UTC"
+}
+
 ```
+
+### Fetching systemd services information
+
+The Base path is [server_ip]:[port]/systemd
+
+|      Param      |      Type        |      Description       |
+|:----------------|:-----------------|:-----------------------|
+|   operation	  |      string      |   Expected values are **start**, **stop** and **list**. list will list the systemd services running, start will start a given systemd service, and stop will stop the service|
+|   filterBy      |      string      |   Excepts a regex, will list systemd services whose name matches the given regex, should be used with operation=list |
+|   serviceName   |      string      |   Excepts a service name, used to specify service to be started or stopped, should be used with operation=start|stop |
 
 
 ## Contributing to Vision
