@@ -55,6 +55,8 @@ start and stop them.
 
 ## Installing from debian package
 
+### NOTE : The debian package does not yet support querying host info, process info, systemd info and system metric info. These features will be included in the package in the next release.
+
 Get the debian package using the following:
 
 ```
