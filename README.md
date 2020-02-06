@@ -311,6 +311,47 @@ Example:
 
 ```
 
+### Fetching process information
+
+The Base path is [server_ip]:[port]/procs
+
+All the options are passed as URL params. Only GET method is required.
+
+|      Param      |      Type        |      Description       |
+|:----------------|:-----------------|:-----------------------|
+|   pid	  |      int      |   Pid of the desired process to be queried|
+
+Example:
+
+```
+{
+  "ProcList": [
+    {
+      "Pid": 0,
+      "Name": "",
+      "CmdLine": ""
+    },
+    {
+      "Pid": 0,
+      "Name": "",
+      "CmdLine": ""
+    },
+    {
+      "Pid": 1,
+      "Name": "systemd",
+      "CmdLine": "/sbin/init splash"
+    },
+    {
+      "Pid": 2,
+      "Name": "kthreadd",
+      "CmdLine": ""
+    }
+  ],
+  "Timestamp": 1580972613,
+  "TimestampUTC": "2020-02-06 07:03:33.870976948 +0000 UTC"
+}
+
+```
 
 
 ## Contributing to Vision
