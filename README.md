@@ -206,7 +206,7 @@ The following section describes how to use Vision endpoints in order to use its 
 
 ### Viewing remote resource files
 
-The Base path is simply [server_ip]:[port]/
+The Base path is [server_ip]:[port]/
 
 All the options are simply passed as URL params. Only GET method is required.
 
@@ -249,7 +249,7 @@ http://[server-ip]:[port]?alias=nginx&readFrom=head&limit=100&ignore=WARNING
 
 ### Viewing remote host information
 
-The Base path is simply [server_ip]:[port]/hostInfo
+The Base path is [server_ip]:[port]/hostInfo
 
 Example:
 
@@ -261,7 +261,7 @@ Response:
 
 {
   "HostInfo": {
-    "hostname": "deep-ThinkPad-X280",
+    "hostname": "vision-test",
     "uptime": 6747,
     "bootTime": 1580965085,
     "procs": 322,
@@ -280,6 +280,37 @@ Response:
 }
 
 ```
+
+### Fetching System Metrics from your remote system
+
+The Base path is [server_ip]:[port]/systemMetrics
+
+Example:
+
+```
+{
+  "Metrics": {
+    "CPU": {
+      "LoadAvg": {
+        "Load1": 0.77,
+        "Load5": 0.66,
+        "Load15": 0.57
+      }
+    },
+    "Memory": {
+      "VirtualMemory": {
+        "MemTotal": 16329969664,
+        "MemFree": 9131687936,
+        "UsedPercent": 23.65463206288538
+      }
+    }
+  },
+  "Timestamp": 1580972115,
+  "TimestampUTC": "2020-02-06 06:55:15.481317283 +0000 UTC"
+}
+
+```
+
 
 
 ## Contributing to Vision
