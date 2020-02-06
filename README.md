@@ -290,6 +290,8 @@ Example:
 ```
 API call : http://[serve_ip]:[port]/systemMetrics
 
+Response:
+
 {
   "Metrics": {
     "CPU": {
@@ -328,6 +330,8 @@ Example:
 ```
 API call : http://[server_ip]:[port]/procs
 
+Response:
+
 {
   "ProcList": [
     {
@@ -356,6 +360,8 @@ API call : http://[server_ip]:[port]/procs
 }
 
 API call : http://[server_ip]:[port]/procs?pid=1234
+
+Response:
 
 {
   "ProcDesc": {
