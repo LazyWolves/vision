@@ -31,7 +31,21 @@ start and stop them.
 
 - Vision allows you to view basic informations about your remote hosts over HTTP
 - Host information includes ```hostname```, ```uptime```, ```bootTime```, ```Porcs```, ```OS```, ```Platform```, ```Arch```,
-  ```KernelVersion```, ```Virtualisation Type```, ```Virtualisation Role```, etc. 
+  ```KernelVersion```, ```Virtualisation Type```, ```Virtualisation Role```, etc.
+
+### Fetching System Metrics from your remote system
+
+- Vision allows you to view systems metrics corresponding to your rempte host
+- As of now it allows you to fetch ```CPU utilisation``` and ```memory utilisation```.
+
+### Fetching process information
+
+- Vision allows you to view all the processes running presently on your remote system.
+- You can query details of a process via its PID.
+- For a queried process it shows ```Name```, ```command line arguments```, ```executable path```,
+  ```current working directory```, ```Status```, ```Number of Threads```, ```GIDS and UIDS```, etc.
+
+###
   
 ## Getting started
 
