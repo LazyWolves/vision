@@ -456,9 +456,9 @@ Response:
   "TimestampUTC": "2020-02-06 07:33:50.024080951 +0000 UTC"
 }
 
-The following API call can be used to stop haproxy, (if haproxy in running in the system, just an example)
+The following API call can be used to stop haproxy, (if haproxy is running in the system, just an example)
 
-API call : http://[server_ip]:[port]/systemd?operation=start&serviceName=haproxy
+API call : http://[server_ip]:[port]/systemd?operation=stopt&serviceName=haproxy
 
 Response:
 
@@ -470,7 +470,7 @@ Response:
 
 Similarly the following can be used to start it back
 
-API call : http://[server_ip]:[port]/systemd?operation=stop&serviceName=haproxy
+API call : http://[server_ip]:[port]/systemd?operation=start&serviceName=haproxy
 
 Response:
 
