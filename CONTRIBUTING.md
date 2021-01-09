@@ -43,3 +43,10 @@ Pull requests should comply the below mentioned template :
 Detailed description of what the Pull request is about and what it does
 
 ```
+
+While sending the PR, please make sure your commits are squashed. The commit message header should contain the corresponding issue number,
+like
+
+``` Fixed #[issue_no] : Commit message header ```
+
+The commit message body should describe in detail what has been done as a part of the PR.
